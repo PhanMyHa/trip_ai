@@ -1,0 +1,80 @@
+{
+    "ai_recommendation": {
+      "query_id": "TRIP-VN-20240901",
+      "destination": "Đà Lạt, Việt Nam",
+      "traveler_profile": "Cặp đôi, thích lãng mạn, ngân sách trung bình, 3 ngày 2 đêm",
+      "schedule": [
+        {
+          "day": 1,
+          "date": "2024-11-20",
+          "theme": "Khám phá Lãng mạn và Cà phê",
+          "weather_forecast": "Sáng mát 18°C, Chiều nắng nhẹ 23°C",
+          "activities": [
+            {
+              "time": "08:00",
+              "title": "Ăn sáng tại Tiệm Bánh Cối Xay Gió",
+              "place_id": "P101",
+              "notes": "Thưởng thức bánh mì và cà phê Đà Lạt. Nên đi sớm để tránh đông."
+            },
+            {
+              "time": "10:00",
+              "title": "Tham quan Thác Datanla (trượt thác)",
+              "place_id": "P102",
+              "notes": "Trải nghiệm máng trượt đôi lãng mạn. Đặt vé trước qua ứng dụng."
+            },
+            {
+              "time": "14:00",
+              "title": "Check-in Vườn Hoa Thành Phố",
+              "place_id": "P103",
+              "notes": "Đi dạo và chụp ảnh. Thuê xe đạp đôi nếu thích."
+            },
+            {
+              "time": "19:00",
+              "title": "Ăn tối lãng mạn tại Nhà hàng sân thượng",
+              "place_id": "P104",
+              "notes": "Thưởng thức món Âu, view toàn cảnh Đà Lạt về đêm."
+            }
+          ],
+          "ai_tip": "Hãy mang theo áo khoác mỏng và kem chống nắng. Khí hậu Đà Lạt thay đổi nhanh chóng."
+        },
+        {
+          "day": 2,
+          "date": "2024-11-21",
+          "theme": "Nghệ thuật và Kiến trúc Cổ",
+          "weather_forecast": "Mưa rào nhẹ 17°C, Chiều se lạnh 20°C",
+          "activities": [
+            {
+              "time": "09:00",
+              "title": "Chụp ảnh tại Ga Đà Lạt cổ",
+              "place_id": "P201",
+              "notes": "Khám phá kiến trúc độc đáo, mua vé tàu đi Trại Mát."
+            },
+            {
+              "time": "11:30",
+              "title": "Thăm Thiền Viện Trúc Lâm",
+              "place_id": "P202",
+              "notes": "Đi cáp treo để ngắm Hồ Tuyền Lâm từ trên cao. Cảnh sắc tuyệt đẹp."
+            },
+            {
+              "time": "15:00",
+              "title": "Trải nghiệm hái dâu tây tại vườn",
+              "place_id": "P203",
+              "notes": "Kiểm tra giờ mở cửa của vườn trước khi đến."
+            },
+            {
+              "time": "18:30",
+              "title": "BBQ ngoài trời tại resort",
+              "place_id": "H101",
+              "notes": "Tận hưởng không gian riêng tư và ấm cúng."
+            }
+          ],
+          "ai_tip": "Nên đặt một chiếc ô hoặc áo mưa vì dự báo có mưa rào nhẹ."
+        }
+      ],
+      "suggested_places": [
+        {"place_id": "P101", "name": "Tiệm Bánh Cối Xay Gió"},
+        {"place_id": "P102", "name": "Thác Datanla"},
+        {"place_id": "H101", "name": "Dalat Wonder Resort"}
+      ]
+    }
+  }

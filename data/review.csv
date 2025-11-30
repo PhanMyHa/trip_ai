@@ -1,0 +1,301 @@
+﻿reviewId;serviceId;userId;rating;comment;createdAt
+rev001;s001;u001;5;Phòng sạch, view đẹp, nhân viên thân thiện!;2025-02-03T12:45:00Z
+rev002;s003;u005;5;Du thuyền sang trọng, dịch vụ xuất sắc! Chèo kayak rất vui.;2025-03-15T10:00:00Z
+rev003;s002;u007;4;Tour Bà Nà Hills ổn, nhưng hơi đông khách vào cuối tuần.;2025-02-28T16:30:00Z
+rev004;s004;u009;4;Khách sạn ngay trung tâm, tiện đi ăn uống. Phòng hơi nhỏ.;2025-03-05T09:15:00Z
+rev005;s005;u011;5;Xe đưa đón sân bay rất chuyên nghiệp, đúng giờ.;2025-04-01T14:20:00Z
+rev006;s006;u013;5;Resort tuyệt vời cho nhiếp ảnh, hồ bơi riêng rất chill.;2025-04-18T11:00:00Z
+rev007;s008;u015;4;Tour Sapa trekking hợp lý về giá, homestay sạch sẽ.;2025-04-25T17:50:00Z
+rev008;s010;u017;5;Dịch vụ 5 sao hoàn hảo, xứng đáng với giá tiền.;2025-05-10T20:30:00Z
+rev009;s012;u019;3;Khách sạn cũ, cần cải tạo. View biển là điểm cộng.;2025-05-25T11:10:00Z
+rev010;s014;u021;5;Căn hộ có bếp tiện lợi cho gia đình có trẻ nhỏ.;2025-06-03T13:45:00Z
+rev011;s016;u025;4;Xe riêng đi Củ Chi thoải mái, tài xế thân thiện.;2025-06-18T08:00:00Z
+rev012;s017;u027;5;Thiết kế khách sạn độc đáo, vị trí trung tâm Sài Gòn.;2025-07-01T21:40:00Z
+rev013;s018;u029;4;Tour lặn biển Phú Quốc ổn, nhưng tàu hơi đông.;2025-07-15T10:55:00Z
+rev014;s020;u031;5;Homestay Pù Luông cực phẩm, view săn mây quá đẹp!;2025-08-01T16:15:00Z
+rev015;s022;u033;5;Khách sạn cổ kính và sang trọng bậc nhất Hà Nội. Dịch vụ hoàn hảo.;2025-08-18T19:00:00Z
+rev016;s023;u035;4;Trải nghiệm Canyoning Đà Lạt rất đã! Dành cho người thích #adventure.;2025-09-05T12:25:00Z
+rev017;s024;u037;3;Khách sạn Vũng Tàu bình thường, không có gì nổi bật. Giá hơi cao.;2025-09-20T10:40:00Z
+rev018;s026;u039;5;Tour xe máy đi Mỹ Sơn rất thú vị, cảnh đẹp, không khí trong lành.;2025-10-05T14:00:00Z
+rev019;s027;u040;5;Resort Đà Nẵng sang trọng, bãi biển riêng sạch sẽ.;2025-10-22T17:30:00Z
+rev020;s029;u042;5;Leo Fansipan 3 ngày 2 đêm là một thử thách đáng giá! Hướng dẫn viên nhiệt tình.;2025-11-10T15:00:00Z
+rev021;s030;u044;4;Tour Jeep đồi cát Mũi Né đẹp, nhưng tài xế hơi vội.;2025-11-28T05:30:00Z
+rev022;s032;u046;5;The Reverie Saigon - đỉnh cao của sự xa hoa! Nội thất lộng lẫy.;2025-12-15T22:00:00Z
+rev023;s033;u048;4;Tham quan Động Phong Nha bằng thuyền rất đẹp, hùng vĩ.;2026-01-01T10:15:00Z
+rev024;s035;u049;5;Lớp học nấu ăn Hội An vui, học được nhiều món ngon. Rất thích hợp cho #family.;2026-01-28T16:00:00Z
+rev025;s037;u050;4;Resort Hội An ven sông, yên tĩnh. Phòng hơi cũ.;2026-02-15T11:40:00Z
+rev026;s038;u052;5;Xe riêng đi Đèo Hải Vân, cảnh đẹp kinh ngạc! Lái xe an toàn.;2026-03-05T09:00:00Z
+rev027;s040;u054;4;Khách sạn Vũng Tàu sạch sẽ, view biển Bãi Sau. Hồ bơi hơi nhỏ.;2026-03-22T14:30:00Z
+rev028;s042;u055;5;Six Senses Ninh Vân Bay - thiên đường có thật! Trải nghiệm 10/10.;2026-04-10T18:00:00Z
+rev029;s044;u057;3;Tour xích lô Hà Nội hơi chậm, nhưng thú vị để ngắm phố cổ.;2026-04-28T10:00:00Z
+rev030;s046;u059;5;Taxi Đà Nẵng - Hội An giá tốt, tài xế vui vẻ.;2026-05-15T08:15:00Z
+rev031;s048;u061;4;Chèo thuyền Tam Cốc đẹp, nhưng người chèo mời mua đồ hơi nhiều.;2026-06-03T11:30:00Z
+rev032;s050;u063;5;Cáp treo Đà Lạt ngắm cảnh đẹp, Thiền Viện thanh tịnh.;2026-06-20T14:00:00Z
+rev033;s052;u065;4;Khách sạn Hà Nội sang trọng, gần Nhà Hát Lớn. Giá hơi cao so với #budget.;2026-07-05T19:30:00Z
+rev034;s054;u067;5;VinWonders Phú Quốc rất rộng, trò chơi đa dạng. Thích hợp cho cả nhà.;2026-07-28T10:00:00Z
+rev035;s056;u069;5;Tour ẩm thực Sài Gòn bằng xe máy là cách tuyệt vời để khám phá thành phố về đêm.;2026-08-15T21:00:00Z
+rev036;s058;u071;4;Xe giường nằm Đà Lạt - TP.HCM êm, sạch sẽ.;2026-09-01T07:30:00Z
+rev037;s060;u073;5;Pilgrimage Village Huế yên tĩnh, kiến trúc đẹp. Phù hợp cho #photography.;2026-09-20T14:50:00Z
+rev038;s063;u075;5;Chèo thuyền thúng Bảy Mẫu vui, người dân địa phương thân thiện.;2026-10-10T16:00:00Z
+rev039;s066;u077;4;Khách sạn Sapa view đẹp, nhưng đường lên hơi khó đi.;2026-10-25T11:15:00Z
+rev040;s069;u079;4;Tắm bùn Nha Trang thư giãn, sạch sẽ.;2026-11-15T13:30:00Z
+rev041;s071;u083;4;Thuê xe máy Huế giá rẻ, tiện tự đi lăng tẩm.;2026-12-05T09:40:00Z
+rev042;s073;u085;5;Hà Giang Loop 4D3N là tour mạo hiểm tuyệt vời! Cảnh hùng vĩ.;2027-01-01T15:00:00Z
+rev043;s075;u087;4;Câu mực đêm Phú Quốc vui, hải sản tươi ngon.;2027-01-25T23:00:00Z
+rev044;s078;u089;3;Skydeck Bitexco view đẹp, nhưng giá vé hơi đắt.;2027-02-10T18:30:00Z
+rev045;s080;u091;5;Tour ẩm thực Hà Nội tuyệt vời! Ăn được nhiều món ngon.;2027-03-01T20:10:00Z
+rev046;s082;u093;4;A La Carte Đà Nẵng view hồ bơi vô cực đẹp, phòng tiện nghi.;2027-03-25T14:55:00Z
+rev047;s084;u095;5;Lặn biển Nha Trang rất chuyên nghiệp, san hô đẹp.;2027-04-10T10:00:00Z
+rev048;s086;u097;5;Tour Jeep Hà Nội khám phá nhiều ngóc ngách thú vị của thành phố.;2027-05-05T13:20:00Z
+rev049;s088;u099;4;Tàu cánh ngầm đi Vũng Tàu nhanh, sạch sẽ.;2027-05-28T09:00:00Z
+rev050;s090;u101;5;The Secret Côn Đảo yên tĩnh, view biển đẹp.;2027-06-15T17:45:00Z
+rev051;s092;u103;4;Vinpearl Nam Hội An rộng, thích hợp cho gia đình. Cần cải thiện dịch vụ phòng.;2027-07-01T11:00:00Z
+rev052;s094;u105;5;Xe riêng Nha Trang - Đà Lạt an toàn, lái xe cẩn thận.;2027-07-25T08:30:00Z
+rev053;s097;u107;5;Alma Resort Cam Ranh rất phù hợp cho gia đình, tiện ích đa dạng.;2027-08-10T16:00:00Z
+rev054;s100;u109;4;Tour xe ATV đồi cát Mũi Né rất vui, đáng thử.;2027-09-01T06:00:00Z
+rev055;s101;u111;4;Tour Cần Thơ bằng thuyền và xe rất tiện, khám phá được nhiều nơi.;2027-09-20T10:45:00Z
+rev056;s104;u113;3;Tour Nha Trang nửa ngày hơi vội, không kịp tham quan kỹ.;2027-10-15T15:20:00Z
+rev057;s106;u115;5;The Cliff Resort Mũi Né view đẹp, hồ bơi vô cực ấn tượng.;2027-11-05T19:30:00Z
+rev058;s108;u118;5;Cáp treo Fansipan nhanh, tiện lợi. View săn mây tuyệt đẹp!;2027-12-01T14:00:00Z
+rev059;s110;u120;4;Trượt máng Datanla vui, nên mua vé khứ hồi.;2027-12-25T11:00:00Z
+rev060;s112;u122;5;JW Marriott Hà Nội sang trọng, kiến trúc độc đáo.;2028-01-15T22:00:00Z
+rev061;s114;u124;4;Vinpearl Condotel Nha Trang view biển đẹp, phòng tiện nghi.;2028-02-10T13:45:00Z
+rev062;s116;u127;5;Xe riêng đi Cần Thơ thoải mái, không mệt.;2028-03-05T09:30:00Z
+rev063;s118;u129;4;Chèo kayak hồ Tuyền Lâm Đà Lạt rất thư giãn.;2028-03-28T15:00:00Z
+rev064;s120;u130;4;Mũi Né Lotus Resort yên tĩnh, gần biển.;2028-04-15T18:00:00Z
+rev065;s122;u132;5;InterContinental Đà Nẵng là tuyệt phẩm kiến trúc, dịch vụ hoàn hảo.;2028-05-10T21:00:00Z
+rev066;s124;u135;5;Bãi Sao Phú Quốc đẹp, thư giãn. Ghế nằm giá rẻ.;2028-06-03T11:00:00Z
+rev067;s127;u137;5;Four Seasons The Nam Hai - trải nghiệm nghỉ dưỡng không thể quên!;2028-06-25T14:30:00Z
+rev068;s129;u139;5;Du thuyền Nha Trang ngắm hoàng hôn rất lãng mạn.;2028-07-20T19:00:00Z
+rev069;s132;u141;4;Mövenpick Phú Quốc view biển đẹp, nhưng hơi xa trung tâm.;2028-08-05T12:00:00Z
+rev070;s134;u143;3;Xe bus Đà Nẵng - Hội An giá rẻ, nhưng đông và hơi chậm.;2028-08-28T16:45:00Z
+rev071;s136;u146;4;The Grand Ho Tram rộng lớn, nhiều tiện ích giải trí.;2028-09-15T10:10:00Z
+rev072;s138;u148;5;Tour chợ nổi Cái Răng buổi sáng rất độc đáo, nên đi sớm.;2028-10-01T08:00:00Z
+rev073;s140;u150;4;Hái dâu tây Đà Lạt vui, dâu ngon.;2028-10-25T15:30:00Z
+rev074;s142;u153;3;Khách sạn Hạ Long bình thường, vị trí gần biển.;2028-11-15T11:40:00Z
+rev075;s145;u154;5;Tour cano Nam Đảo Phú Quốc đẹp, biển xanh cát trắng.;2028-12-10T09:00:00Z
+rev076;s147;u156;5;Hotel des Arts Sài Gòn rất đẹp, nội thất cổ điển sang trọng.;2029-01-05T17:00:00Z
+rev077;s149;u159;4;Đường Hầm Đất Sét Đà Lạt chụp ảnh đẹp, độc đáo.;2029-01-28T14:20:00Z
+rev078;s152;u161;5;Vinpearl Golf Phú Quốc là nơi lý tưởng để chơi golf và nghỉ dưỡng.;2029-02-15T10:00:00Z
+rev079;s154;u163;5;Xe riêng Đà Nẵng - Bà Nà rất tiện, không phải lo chờ đợi.;2029-03-10T08:45:00Z
+rev080;s157;u166;5;Hyatt Regency Đà Nẵng rất phù hợp cho gia đình, hồ bơi đẹp.;2029-04-05T16:00:00Z
+rev081;s160;u168;4;Hải đăng Vũng Tàu view đẹp, leo lên hơi mệt.;2029-04-28T17:30:00Z
+rev082;s162;u170;4;Phà Tuần Châu - Cát Bà nhanh, tiện lợi.;2029-05-15T10:00:00Z
+rev083;s165;u172;5;Cáp treo Hòn Thơm rất dài, ngắm cảnh đẹp.;2029-06-10T13:20:00Z
+rev084;s167;u174;5;Caravelle Saigon - khách sạn có lịch sử, dịch vụ tốt.;2029-07-01T20:00:00Z
+rev085;s170;u176;3;Suối Tiên Mũi Né đẹp, nhưng nước cạn. Giá vé rẻ.;2029-07-25T15:00:00Z
+rev086;s172;u177;4;Oriental Hotel Đà Nẵng view sông Hàn đẹp, nhưng phòng hơi nhỏ.;2029-08-10T12:10:00Z
+rev087;s174;u179;5;Vinpearl Safari Phú Quốc rất đáng đi, động vật đa dạng.;2029-09-01T11:45:00Z
+rev088;s177;u180;5;Premier Village Đà Nẵng - biệt thự sang trọng, hồ bơi riêng.;2029-09-25T18:00:00Z
+rev089;s179;u182;4;Vườn Chim Thung Nham đẹp, nhiều chim cò. Nên đi vào buổi chiều.;2029-10-15T16:30:00Z
+rev090;s181;u183;4;Ga Đà Lạt cổ kính, chụp ảnh đẹp. Tàu đi Trại Mát thú vị.;2029-11-05T09:00:00Z
+rev091;s184;u185;5;Tour lặn biển Nha Trang riêng tư, rất thoải mái và chuyên nghiệp.;2029-12-01T10:00:00Z
+rev092;s187;u186;5;The Anam Cam Ranh yên tĩnh, kiến trúc đẹp. Phù hợp nghỉ dưỡng.;2029-12-25T15:00:00Z
+rev093;s189;u189;5;Chèo thuyền Tràng An đẹp như tranh vẽ, hùng vĩ.;2030-01-20T11:30:00Z
+rev094;s192;u190;5;Du thuyền 5 sao Hạ Long tuyệt vời! Hải trình đẹp, dịch vụ cao cấp.;2030-02-15T18:00:00Z
+rev095;s194;u192;4;Tour Mỹ Sơn từ Đà Nẵng ổn, lịch sử phong phú.;2030-03-10T14:00:00Z
+rev096;s197;u193;4;Khách sạn Đà Nẵng gần biển, giá tốt.;2030-04-01T10:45:00Z
+rev097;s201;u195;3;Thuê xe máy Cần Thơ tiện lợi, nhưng xe hơi cũ.;2030-04-25T15:00:00Z
+rev098;s204;u198;4;Chợ Đầm Nha Trang mua sắm đa dạng, giá cả phải chăng.;2030-05-10T12:00:00Z
+rev099;s207;u199;5;The Blossom Resort Đà Nẵng phong cách Nhật, rất thư giãn.;2030-06-05T17:30:00Z
+rev100;s209;u005;4;Tham quan Chùa Bái Đính rất rộng, nên đi xe điện.;2030-06-30T10:00:00Z
+rev101;s212;u007;4;Mercure Hà Nội tiện nghi, gần ga tàu.;2030-07-20T14:30:00Z
+rev102;s214;u009;3;Bãi biển riêng Nha Trang đẹp, nhưng dịch vụ ăn uống hơi đắt.;2030-08-05T11:00:00Z
+rev103;s216;u011;5;Nhà thờ Đức Bà Sài Gòn kiến trúc tuyệt đẹp, nên ghé thăm.;2030-09-01T16:00:00Z
+rev104;s217;u013;5;Pullman Phú Quốc view biển đẹp, phòng thiết kế hiện đại.;2030-09-25T19:00:00Z
+rev105;s220;u015;3;Lâu đài Rượu Vang Mũi Né chụp ảnh đẹp, nhưng không có nhiều hoạt động.;2030-10-15T13:30:00Z
+rev106;s222;u017;4;Oriental Hotel Đà Lạt view đẹp, kiến trúc Pháp cổ.;2030-11-05T10:00:00Z
+rev107;s224;u019;5;Tour Nha Trang riêng tư rất thoải mái, tài xế kiêm hướng dẫn.;2030-11-28T14:00:00Z
+rev108;s227;u021;5;Mikazuki Đà Nẵng có công viên nước, trẻ em rất thích.;2030-12-20T11:10:00Z
+rev109;s229;u025;4;Tham quan Cố đô Hoa Lư lịch sử, nên thuê hướng dẫn viên.;2031-01-15T09:30:00Z
+rev110;s232;u027;5;Sofitel Sài Gòn Plaza dịch vụ hoàn hảo, vị trí đắc địa.;2031-02-05T21:00:00Z
+rev111;s234;u029;3;Tour Đảo Khỉ Nha Trang hơi chán, xiếc thú không hấp dẫn.;2031-03-01T12:00:00Z
+rev112;s237;u031;5;Hotel Royal Hội An view sông đẹp, dịch vụ cao cấp.;2031-03-25T15:30:00Z
+rev113;s240;u033;4;Xe riêng Mũi Né - Nha Trang tiện lợi, nhưng giá hơi cao.;2031-04-20T10:10:00Z
+rev114;s242;u035;5;Amanoi Ninh Thuận là khu nghỉ dưỡng đẳng cấp thế giới. Không có gì để chê.;2031-05-15T17:00:00Z
+rev115;s244;u037;4;Tắm bùn Hòn Tằm thư giãn, sạch sẽ. Nên đi vào ngày thường.;2031-06-05T13:45:00Z
+rev116;s247;u039;3;Khách sạn Đà Nẵng view biển, nhưng phòng cơ bản.;2031-06-28T10:00:00Z
+rev117;s249;u040;4;Thuê xe đạp Tam Cốc rẻ, tiện khám phá cánh đồng lúa.;2031-07-20T15:00:00Z
+rev118;s252;u042;3;Xe bus Hà Nội - Hạ Long đông, nhưng giá rẻ.;2031-08-10T08:00:00Z
+rev119;s255;u044;4;Xe riêng Phú Quốc - Hà Tiên tiện lợi, bao gồm phí phà.;2031-09-01T10:30:00Z
+rev120;s257;u045;4;The Five Elements Resort Đà Nẵng view đẹp, phòng sạch.;2031-09-25T17:00:00Z
+rev121;s260;u046;5;Thuê xe ATV đồi cát Mũi Né rất vui, đáng thử.;2031-10-18T14:00:00Z
+rev122;s262;u048;5;Du thuyền 5 sao Hạ Long tuyệt vời, dịch vụ cao cấp.;2031-11-15T19:30:00Z
+rev123;s264;u050;4;Lặn biển Nha Trang cho người mới bắt đầu ổn, hướng dẫn viên nhiệt tình.;2031-12-05T10:00:00Z
+rev124;s267;u052;5;Fusion Suites Đà Nẵng spa miễn phí rất thư giãn. Hồ bơi vô cực đẹp.;2031-12-28T16:00:00Z
+rev125;s270;u054;4;Xe riêng Mũi Né - Đà Lạt an toàn, lái xe cẩn thận.;2032-01-25T09:00:00Z
+rev126;s272;u055;5;Oriental Jade Hà Nội view Hồ Gươm tuyệt đẹp, khách sạn sang trọng.;2032-02-15T21:00:00Z
+rev127;s274;u057;3;Sailing Club Nha Trang đông, nhạc ồn. Chỉ thích hợp cho #nightlife.;2032-03-05T23:00:00Z
+rev128;s277;u059;5;Pullman Đà Nẵng resort đẹp, bãi biển riêng sạch.;2032-03-28T14:30:00Z
+rev129;s280;u061;5;Tour xe Jeep đồi cát Mũi Né rất đáng thử, ngắm hoàng hôn đẹp.;2032-04-20T18:00:00Z
+rev130;s282;u063;3;Du thuyền Hạ Long 3 sao, dịch vụ cơ bản, chấp nhận được.;2032-05-10T10:00:00Z
+rev131;s284;u065;4;Tắm bùn I-Resort Nha Trang sạch sẽ, giá hợp lý.;2032-06-01T15:00:00Z
+rev132;s287;u067;5;Xe riêng đón sân bay Đà Nẵng nhanh, đúng giờ.;2032-06-25T11:20:00Z
+rev133;s290;u069;4;Xe riêng Mũi Né - Vũng Tàu thoải mái, nhưng giá hơi cao.;2032-07-20T08:00:00Z
+rev134;s292;u071;4;Oriental Jade Hà Nội vị trí tốt, gần phố cổ.;2032-08-10T17:00:00Z
+rev135;s294;u073;3;Cáp treo Vinpearl Nha Trang view đẹp, nhưng nên mua vé VinWonders luôn.;2032-09-01T14:00:00Z
+rev136;s297;u075;5;Xe riêng Đà Nẵng - Hội An giá tốt, tài xế thân thiện.;2032-09-25T09:00:00Z
+rev137;s300;u077;4;Xe giường nằm Mũi Né - Đà Lạt êm, sạch sẽ.;2032-10-20T07:30:00Z
+rev138;s302;u079;5;Du thuyền 5 sao Hạ Long, bể bơi 4 mùa tuyệt vời.;2032-11-15T18:30:00Z
+rev139;s304;u081;4;Xe riêng đi cáp treo Vinpearl Nha Trang tiện lợi.;2032-12-10T10:15:00Z
+rev140;s307;u083;4;Xe riêng Đà Nẵng - Huế qua hầm nhanh, tiện.;2033-01-05T14:00:00Z
+rev141;s309;u085;5;Homestay Tả Phìn Sapa rất ấm cúng, trải nghiệm tắm lá thuốc tuyệt vời.;2033-01-30T17:00:00Z
+rev142;s312;u087;5;Du thuyền Ambassador Hạ Long sang trọng, dịch vụ xuất sắc.;2033-02-25T19:00:00Z
+rev143;s314;u089;5;Thuê tàu riêng Nha Trang tự do lịch trình, rất đáng tiền.;2033-03-20T10:00:00Z
+rev144;s317;u091;4;Thuê xe đạp Đà Nẵng/Hội An rẻ, tiện khám phá.;2033-04-15T13:45:00Z
+rev145;s320;u093;4;Xe giường nằm Mũi Né - TP.HCM êm, sạch sẽ.;2033-05-10T07:00:00Z
+rev146;s322;u095;4;Tour Ninh Bình từ Hà Nội trọn ngày ổn, nhưng hơi vội.;2033-06-01T15:00:00Z
+rev147;s324;u097;5;Tour đồi cát Nha Trang rất đẹp, cảnh quan độc đáo.;2033-06-25T11:00:00Z
+rev148;s327;u099;4;Melia Vinpearl Đà Nẵng view sông Hàn đẹp, căn hộ tiện nghi.;2033-07-20T16:30:00Z
+rev149;s330;u101;5;Xe riêng Mũi Né - Đà Lạt an toàn, ngắm cảnh đẹp.;2033-08-10T09:00:00Z
+rev150;s332;u103;4;Du thuyền Lan Hạ La Casta đẹp, dịch vụ tốt.;2033-09-01T18:00:00Z
+rev151;s334;u105;5;Vé trọn gói Hòn Tằm Nha Trang cao cấp, rất thoải mái.;2033-09-25T11:45:00Z
+rev152;s337;u107;4;Xe riêng Đà Nẵng đi Lăng Cô tiện lợi.;2033-10-20T09:30:00Z
+rev153;s339;u109;5;Xe Limousine Sapa - Hà Nội rất êm, thoải mái như giường riêng.;2033-11-15T20:00:00Z
+rev154;s342;u111;3;Du thuyền Hạ Long Cozy Bay giá rẻ, dịch vụ cơ bản.;2033-12-05T10:00:00Z
+rev155;s344;u113;4;Công viên nước Vinpearl Nha Trang vui, thích hợp cho #family.;2033-12-28T14:00:00Z
+rev156;s347;u115;5;Tour Đà Nẵng trọn ngày tham quan nhiều điểm đẹp, tổ chức tốt.;2034-01-20T15:30:00Z
+rev157;s350;u118;4;Trượt cát Mũi Né vui, nên thử.;2034-02-10T16:00:00Z
+rev158;s352;u120;4;Du thuyền Dragon Legend Lan Hạ đẹp, dịch vụ tốt.;2034-03-01T17:30:00Z
+rev159;s354;u122;5;Xe riêng đón sân bay Cam Ranh nhanh, tiện lợi.;2034-03-25T11:00:00Z
+rev160;s357;u124;5;Xem Rồng phun lửa Đà Nẵng rất ấn tượng, nên xem vào cuối tuần.;2034-04-15T21:30:00Z
+rev161;s360;u127;4;Xe giường nằm Mũi Né - Nha Trang êm, sạch sẽ.;2034-05-10T07:00:00Z
+rev162;s362;u129;5;Du thuyền Paradise Peak Hạ Long sang trọng, có Spa riêng.;2034-06-01T20:00:00Z
+rev163;s364;u130;5;Thuê tàu riêng Nha Trang rất đáng tiền, tự do lịch trình.;2034-06-25T10:00:00Z
+rev164;s367;u132;4;Xe riêng Đà Nẵng đi Mỹ Sơn tiện lợi, tài xế tốt.;2034-07-20T08:30:00Z
+rev165;s370;u135;5;Xe Limousine Mũi Né - TP.HCM rất thoải mái.;2034-08-15T21:00:00Z
+rev166;s372;u137;4;Du thuyền Sea Life Hạ Long dịch vụ tốt, hải trình đẹp.;2034-09-01T17:00:00Z
+rev167;s374;u139;4;Xe riêng đi resort phía Bắc Nha Trang tiện lợi.;2034-09-25T10:00:00Z
+rev168;s377;u141;5;Xe riêng Đà Nẵng đi Lăng Cô an toàn, ngắm cảnh đẹp.;2034-10-20T09:00:00Z
+rev169;s380;u143;4;Xe riêng Mũi Né - Hồ Tràm tiện lợi.;2034-11-15T08:00:00Z
+rev170;s382;u146;5;Thuê tàu riêng Hạ Long tự do, rất đáng tiền.;2034-12-10T11:30:00Z
+rev171;s384;u148;5;Xe riêng Nha Trang - Đà Lạt an toàn, lái xe cẩn thận.;2035-01-05T15:00:00Z
+rev172;s387;u150;5;Xe riêng đón sân bay Đà Nẵng đi Hội An nhanh, đúng giờ.;2035-01-30T10:00:00Z
+rev173;s390;u153;3;Vé tàu Phan Thiết giá rẻ, nhưng hơi chậm.;2035-02-25T11:00:00Z
+rev174;s392;u154;4;Du thuyền Genesis Lan Hạ đẹp, dịch vụ tốt.;2035-03-20T17:30:00Z
+rev175;s394;u156;4;Xe riêng Nha Trang đi sân bay Cam Ranh 7 chỗ tiện lợi.;2035-04-15T08:45:00Z
+rev176;s397;u159;4;Xe riêng đón sân bay Đà Nẵng về trung tâm nhanh.;2035-05-05T12:00:00Z
+rev177;s400;u161;4;Thuê xe Jeep đồi cát Mũi Né tự lái rất vui.;2035-05-28T06:00:00Z
+rev178;s402;u163;5;Du thuyền Era Hạ Long rất sang trọng, dịch vụ cao cấp.;2035-06-20T19:00:00Z
+rev179;s404;u166;4;Tour 3 đảo Nha Trang lặn biển ổn, nhưng hơi đông.;2035-07-10T10:00:00Z
+rev180;s407;u168;5;Tour xe máy khám phá Sơn Trà rất đáng thử, cảnh đẹp.;2035-08-01T15:00:00Z
+rev181;s410;u170;4;Xe riêng Mũi Né - Nha Trang 7 chỗ an toàn.;2035-08-25T09:00:00Z
+rev182;s412;u172;5;Du thuyền Mon Cheri Lan Hạ sang trọng, phòng đẹp.;2035-09-15T18:00:00Z
+rev183;s414;u174;5;Tour Hòn Tằm trọn gói (tắm bùn, ăn trưa) rất đáng tiền.;2035-10-10T13:30:00Z
+rev184;s417;u176;4;Thuê xe máy Đà Nẵng tiện lợi, giá rẻ.;2035-11-01T10:45:00Z
+rev185;s420;u177;4;Tour xe Jeep đồi cát Mũi Né ngắm hoàng hôn đẹp.;2035-11-25T18:00:00Z
+rev186;s422;u179;5;Du thuyền Elite Hạ Long rất sang trọng, dịch vụ cao cấp.;2035-12-20T20:00:00Z
+rev187;s424;u180;3;Xe riêng đi resort phía Nam Nha Trang tiện lợi, nhưng giá hơi cao.;2036-01-10T10:00:00Z
+rev188;s427;u182;4;Thuê thuyền xem Rồng phun lửa Đà Nẵng rất thú vị.;2036-02-01T21:30:00Z
+rev189;s430;u183;3;Xe bus Mũi Né - Phan Thiết rẻ, nhưng đông và chậm.;2036-02-25T09:00:00Z
+rev190;s432;u185;4;Du thuyền Bhaya Hạ Long hải trình truyền thống, dịch vụ tốt.;2036-03-20T17:00:00Z
+rev191;s434;u186;4;Thuê xe máy Nha Trang tiện lợi, giá tốt.;2036-04-10T13:45:00Z
+rev192;s437;u187;5;Xe riêng Đà Nẵng - Huế qua Đèo Hải Vân, cảnh đẹp tuyệt vời.;2036-05-05T09:30:00Z
+rev193;s440;u189;3;Xe giường nằm Mũi Né - Vũng Tàu êm, nhưng hơi chậm.;2036-05-30T07:00:00Z
+rev194;s442;u190;5;Du thuyền Au Co Hạ Long 3 ngày 2 đêm rất đáng tiền, trải nghiệm tuyệt vời.;2036-06-25T19:00:00Z
+rev195;s445;u192;4;Xe riêng Phú Quốc đi Bãi Sao tiện lợi.;2036-07-20T11:00:00Z
+rev196;s447;u193;4;Xe riêng Đà Nẵng - Bà Nà khứ hồi thoải mái.;2036-08-10T08:45:00Z
+rev197;s450;u195;4;Thuê thiết bị lướt ván Mũi Né cả ngày giá tốt.;2036-09-01T15:30:00Z
+rev198;s452;u198;5;Du thuyền Scarlet Pearl Lan Hạ rất sang trọng, dịch vụ cao cấp.;2036-09-25T20:00:00Z
+rev199;s454;u199;4;Vé vào bãi biển riêng Nha Trang đẹp, sạch sẽ.;2036-10-20T13:00:00Z
+rev200;s457;u005;4;Bảo tàng Chăm Đà Nẵng kiến trúc độc đáo, nên ghé thăm.;2036-11-15T11:00:00Z
+rev201;s460;u007;3;Thuê ván trượt cát Mũi Né rẻ, nhưng hơi khó trượt.;2036-12-05T15:30:00Z
+rev202;s462;u009;5;Du thuyền President Hạ Long sang trọng, bể bơi lớn.;2037-01-01T19:00:00Z
+rev203;s464;u011;5;Thuê tàu riêng Nha Trang đi Hòn Mun rất đáng tiền.;2037-01-28T10:00:00Z
+rev204;s467;u013;5;Xe riêng Đà Nẵng - Hội An nhanh, tiện lợi.;2037-02-20T09:00:00Z
+rev205;s470;u015;4;Xe riêng Mũi Né về Ga Phan Thiết nhanh.;2037-03-15T14:30:00Z
+rev206;s472;u017;3;Du thuyền Oasis Bay Hạ Long dịch vụ cơ bản, chấp nhận được.;2037-04-01T10:00:00Z
+rev207;s474;u019;5;Xe Limousine đi resort phía Bắc Nha Trang rất thoải mái.;2037-04-25T11:00:00Z
+rev208;s477;u021;4;Xe bus Đà Nẵng - Hội An khứ hồi giá tốt, tiện lợi.;2037-05-20T15:00:00Z
+rev209;s480;u025;4;Tour xe Jeep đồi cát Mũi Né ngắm bình minh rất đẹp.;2037-06-10T06:00:00Z
+rev210;s482;u027;5;Du thuyền Athena Lan Hạ rất đẹp, dịch vụ tốt.;2037-07-01T19:30:00Z
+rev211;s484;u029;5;Xe Limousine đón sân bay Cam Ranh rất thoải mái.;2037-07-25T10:00:00Z
+rev212;s487;u031;4;Thuê xe đạp Đà Nẵng/Hội An giá rẻ, tiện khám phá.;2037-08-15T13:45:00Z
+rev213;s490;u033;5;Xe Limousine Mũi Né - TP.HCM rất thoải mái.;2037-09-05T21:00:00Z
+rev214;s492;u035;5;Du thuyền La Regina Lan Hạ rất sang trọng, dịch vụ cao cấp.;2037-10-01T18:00:00Z
+rev215;s494;u037;5;Xe Limousine Nha Trang - Đà Lạt rất thoải mái.;2037-10-25T15:00:00Z
+rev216;s497;u039;5;Xe Limousine đón sân bay Đà Nẵng rất sang trọng.;2037-11-15T11:20:00Z
+rev217;s500;u040;5;Xe Limousine Mũi Né - Đà Lạt rất thoải mái.;2037-12-05T09:00:00Z
+rev218;s502;u042;4;Du thuyền Alisa Hạ Long đẹp, dịch vụ tốt.;2037-12-28T17:00:00Z
+rev219;s504;u044;5;Xe Van VIP Nha Trang đi sân bay Cam Ranh rất thoải mái.;2038-01-20T10:00:00Z
+rev220;s507;u045;5;Xe Limousine Đà Nẵng - Hội An rất thoải mái.;2038-02-15T14:30:00Z
+rev221;s510;u046;3;Xe bus Mũi Né - Phan Thiết rẻ, nhưng đông.;2038-03-05T11:00:00Z
+rev222;s512;u048;5;Du thuyền Genesis Regal Lan Hạ rất sang trọng.;2038-03-28T19:00:00Z
+rev223;s514;u049;5;Xe Van VIP Nha Trang - Đà Lạt rất thoải mái.;2038-04-20T15:00:00Z
+rev224;s517;u050;5;Xe riêng Đà Nẵng - Huế qua Đèo Hải Vân, cảnh đẹp.;2038-05-15T09:00:00Z
+rev225;s520;u052;4;Thuê xe ATV đồi cát Mũi Né (30 phút) vui.;2038-06-03T06:00:00Z
+rev226;s522;u054;3;Du thuyền Viet Beauty Hạ Long dịch vụ cơ bản, chấp nhận được.;2038-06-25T10:00:00Z
+rev227;s524;u055;5;Xe Van VIP đón sân bay Cam Ranh rất thoải mái.;2038-07-20T11:20:00Z
+rev228;s527;u057;5;Xe Limousine Đà Nẵng - Bà Nà rất thoải mái.;2038-08-10T08:00:00Z
+rev229;s530;u059;4;Bài học Kitesurfing trung cấp ổn, giáo viên nhiệt tình.;2038-09-01T15:00:00Z
+rev230;s532;u061;4;Du thuyền Syrena Hạ Long đẹp, dịch vụ tốt.;2038-09-25T17:00:00Z
+rev231;s534;u063;5;Thuê tàu riêng Nha Trang đi Đảo Khỉ rất vui.;2038-10-20T11:00:00Z
+rev232;s537;u065;5;Xe Limousine Đà Nẵng đi Huế rất thoải mái.;2038-11-10T10:00:00Z
+rev233;s540;u067;4;Thuê thiết bị Kitesurfing nửa ngày giá tốt.;2038-12-05T14:30:00Z
+rev234;s542;u069;4;Du thuyền Legend Halong đẹp, dịch vụ tốt.;2039-01-01T17:30:00Z
+rev235;s544;u071;5;Xe Limousine Nha Trang đi sân bay Cam Ranh rất thoải mái.;2039-01-25T10:45:00Z
+rev236;s547;u073;5;Xe Van VIP Đà Nẵng đi Huế rất thoải mái.;2039-02-20T09:00:00Z
+rev237;s550;u075;5;Tour xe Jeep đồi cát Mũi Né cao cấp, rất đáng tiền.;2039-03-15T06:00:00Z
+rev238;s552;u077;3;Du thuyền Sea Star Hạ Long dịch vụ cơ bản, chấp nhận được.;2039-04-01T10:00:00Z
+rev239;s554;u079;5;Xe Limousine đón sân bay Cam Ranh rất thoải mái.;2039-04-25T11:00:00Z
+rev240;s557;u081;4;Xe riêng Đà Nẵng đi Mỹ Sơn 7 chỗ tiện lợi.;2039-05-20T08:30:00Z
+rev241;s560;u083;5;Tour xe Jeep đồi cát Mũi Né riêng tư, rất thoải mái.;2039-06-10T06:00:00Z
+rev242;s562;u085;4;Du thuyền Royal Palace Hạ Long đẹp, dịch vụ tốt.;2039-07-01T17:00:00Z
+rev243;s564;u087;4;Xe riêng Nha Trang - Đà Lạt 7 chỗ an toàn.;2039-07-25T15:00:00Z
+rev244;s567;u089;3;Xe bus Đà Nẵng đi Mỹ Sơn rẻ, nhưng đông.;2039-08-15T08:00:00Z
+rev245;s570;u091;5;Xe Van VIP Mũi Né - TP.HCM rất thoải mái.;2039-09-05T21:00:00Z
+rev246;s572;u093;4;Du thuyền Indochina Sails Hạ Long đẹp, dịch vụ tốt.;2039-09-28T18:00:00Z
+rev247;s574;u095;5;Xe Limousine Nha Trang - Đà Lạt khứ hồi rất thoải mái.;2039-10-20T15:00:00Z
+rev248;s577;u097;4;Thuê xe máy Đà Nẵng cả ngày giá tốt.;2039-11-15T10:00:00Z
+rev249;s580;u099;4;Tour xe Jeep đồi cát Mũi Né ngắm bình minh đẹp.;2039-12-05T06:00:00Z
+rev250;s582;u101;5;Du thuyền Athena Royal Lan Hạ rất sang trọng, dịch vụ cao cấp.;2040-01-01T20:00:00Z
+rev251;s584;u103;5;Xe Limousine Nha Trang đi resort phía Nam rất thoải mái.;2040-01-25T11:00:00Z
+rev252;s587;u105;5;Xe Van VIP đón sân bay Đà Nẵng rất thoải mái.;2040-02-15T12:00:00Z
+rev253;s590;u107;5;Xe Van VIP Mũi Né - TP.HCM rất thoải mái.;2040-03-05T21:00:00Z
+rev254;s592;u109;4;Du thuyền Dragon Cruise Hạ Long đẹp, dịch vụ tốt.;2040-03-28T17:00:00Z
+rev255;s594;u111;4;Xe riêng Nha Trang đi sân bay Cam Ranh 7 chỗ tiện lợi.;2040-04-20T08:45:00Z
+rev256;s597;u113;5;Xe Van VIP Đà Nẵng - Hội An rất thoải mái.;2040-05-15T09:30:00Z
+rev257;s600;u115;5;Thuê xe ATV đồi cát Mũi Né (1 giờ) rất vui.;2040-06-05T15:00:00Z
+rev258;s602;u118;3;Du thuyền Phoenix Hạ Long dịch vụ cơ bản, chấp nhận được.;2040-06-25T10:00:00Z
+rev259;s604;u120;5;Xe Van VIP Nha Trang - Đà Lạt khứ hồi rất thoải mái.;2040-07-20T15:00:00Z
+rev260;s607;u122;5;Xe riêng đón sân bay Đà Nẵng đi Huế 7 chỗ tiện lợi.;2040-08-10T12:00:00Z
+rev261;s610;u124;4;Xe riêng Mũi Né - Nha Trang 7 chỗ an toàn.;2040-09-05T09:00:00Z
+rev262;s612;u127;5;Du thuyền Le Theatre Lan Hạ rất sang trọng, có rạp chiếu phim.;2040-09-28T19:00:00Z
+rev263;s614;u129;4;Xe riêng đi resort phía Bắc Nha Trang 7 chỗ tiện lợi.;2040-10-20T10:00:00Z
+rev264;s617;u130;4;Xe riêng Đà Nẵng - Hội An 7 chỗ tiện lợi.;2040-11-15T14:30:00Z
+rev265;s620;u132;5;Thuê xe ATV đồi cát Mũi Né (2 giờ) rất vui.;2040-12-05T15:00:00Z
+rev266;s622;u135;5;Du thuyền Hera Lan Hạ rất đẹp, dịch vụ tốt.;2041-01-01T20:00:00Z
+rev267;s624;u137;5;Xe Limousine Nha Trang đi sân bay Cam Ranh 7 chỗ rất thoải mái.;2041-01-25T11:00:00Z
+rev268;s627;u139;5;Xe Limousine Đà Nẵng đi Huế 7 chỗ rất thoải mái.;2041-02-20T09:00:00Z
+rev269;s630;u141;5;Tour xe Jeep đồi cát Mũi Né 7 chỗ rất thoải mái.;2041-03-15T06:00:00Z
+rev270;s632;u143;5;Du thuyền Violet Hạ Long rất sang trọng, phong cách cổ điển.;2041-04-01T19:00:00Z
+rev271;s634;u146;5;Xe Limousine Nha Trang đi resort phía Bắc khứ hồi rất thoải mái.;2041-04-25T11:00:00Z
+rev272;s637;u148;5;Xe Van VIP Đà Nẵng đi Huế khứ hồi rất thoải mái.;2041-05-20T09:30:00Z
+rev273;s640;u150;5;Tour xe Jeep đồi cát Mũi Né 7 chỗ rất thoải mái.;2041-06-10T06:00:00Z
+rev274;s642;u153;4;Du thuyền Signature Hạ Long đẹp, dịch vụ tốt.;2041-07-01T17:00:00Z
+rev275;s644;u154;4;Xe riêng Nha Trang đi resort phía Nam 7 chỗ tiện lợi.;2041-07-25T10:00:00Z
+rev276;s647;u156;5;Xe Van VIP Đà Nẵng - Hội An khứ hồi rất thoải mái.;2041-08-15T14:30:00Z
+rev277;s650;u157;5;Tour xe Jeep đồi cát Mũi Né 7 chỗ rất thoải mái.;2041-09-05T06:00:00Z
+rev278;s652;u159;4;Du thuyền Pelican Hạ Long đẹp, dịch vụ tốt.;2041-09-28T19:00:00Z
+rev279;s654;u161;5;Xe riêng Nha Trang - Đà Lạt khứ hồi 7 chỗ rất thoải mái.;2041-10-20T15:00:00Z
+rev280;s657;u163;5;Xe riêng đón sân bay Đà Nẵng đi Huế khứ hồi 7 chỗ tiện lợi.;2041-11-15T12:00:00Z
+rev281;s660;u165;5;Tour xe Jeep đồi cát Mũi Né 7 chỗ rất thoải mái.;2041-12-05T06:00:00Z
+rev282;s662;u166;3;Du thuyền Glory Hạ Long dịch vụ cơ bản, chấp nhận được.;2041-12-25T10:00:00Z
+rev283;s664;u168;5;Xe Van VIP Nha Trang đi resort phía Bắc khứ hồi rất thoải mái.;2042-01-20T11:00:00Z
+rev284;s667;u169;5;Xe Limousine Đà Nẵng đi Huế khứ hồi rất thoải mái.;2042-02-15T09:30:00Z
+rev285;s670;u170;5;Xe Limousine Mũi Né - Nha Trang 7 chỗ rất thoải mái.;2042-03-05T09:00:00Z
+rev286;s672;u172;4;Du thuyền Oriental Sails Hạ Long đẹp, dịch vụ tốt.;2042-03-28T17:00:00Z
+rev287;s674;u174;5;Xe Limousine Nha Trang - Đà Lạt khứ hồi rất thoải mái.;2042-04-20T15:00:00Z
+rev288;s677;u176;5;Xe Limousine Đà Nẵng - Hội An khứ hồi rất thoải mái.;2042-05-15T14:30:00Z
+rev289;s680;u177;5;Tour xe Jeep đồi cát Mũi Né cao cấp, rất đáng tiền.;2042-06-10T06:00:00Z
+rev290;s682;u179;4;Du thuyền Royal Heritage Hạ Long đẹp, dịch vụ tốt.;2042-06-25T19:00:00Z
+rev291;s684;u180;5;Xe Van VIP Nha Trang đi sân bay Cam Ranh khứ hồi rất thoải mái.;2042-07-20T11:00:00Z
+rev292;s687;u182;5;Xe Limousine Đà Nẵng đi Huế khứ hồi rất thoải mái.;2042-08-10T09:30:00Z
+rev293;s690;u183;5;Tour xe Jeep đồi cát Mũi Né cao cấp, rất đáng tiền.;2042-09-05T06:00:00Z
+rev294;s692;u185;4;Du thuyền Syrena Hạ Long 3 ngày 2 đêm đẹp, dịch vụ tốt.;2042-09-28T17:00:00Z
+rev295;s694;u186;5;Xe Limousine Nha Trang đi resort phía Bắc khứ hồi rất thoải mái.;2042-10-25T11:00:00Z
+rev296;s697;u187;5;Xe Van VIP Đà Nẵng - Hội An khứ hồi rất thoải mái.;2042-11-15T14:30:00Z
+rev297;s700;u189;5;Tour xe Jeep đồi cát Mũi Né cao cấp, rất đáng tiền.;2042-12-10T06:00:00Z
+rev298;s702;u190;4;Du thuyền Legend Halong 3 ngày 2 đêm đẹp, dịch vụ tốt.;2043-01-01T17:00:00Z
+rev299;s704;u192;5;Xe Van VIP Nha Trang đi sân bay Cam Ranh khứ hồi rất thoải mái.;2043-01-25T11:00:00Z
+rev300;s707;u193;5;Xe Limousine Đà Nẵng đi Huế khứ hồi rất thoải mái.;2043-02-20T09:30:00Z

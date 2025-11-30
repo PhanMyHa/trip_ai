@@ -1,0 +1,51 @@
+﻿reelId;userId;videoUrl;caption;likesCount;createdAt
+r001;u001;https://cdn.example.com/reels/danang-beach.mp4;Biển Đà Nẵng lúc hoàng hôn 🌅;145;2025-02-01T14:00:00Z
+r002;u005;https://cdn.example.com/reels/sapa-trekking.mp4;Chinh phục đỉnh Fansipan trong sương mù! Cảm giác thật tuyệt vời. #trekking #adventure;850;2025-02-15T09:30:00Z
+r003;u009;https://cdn.example.com/reels/hanoi-streetfood.mp4;Phở cuốn Hàng Buồm - món ăn đường phố phải thử ở Hà Nội 🍜 #streetfood #hanoi;1200;2025-03-01T18:45:00Z
+r004;u013;https://cdn.example.com/reels/halong-kayak.mp4;Chèo kayak giữa Vịnh Hạ Long, vẻ đẹp hùng vĩ của thiên nhiên. #halongbay #nature #photography;95;2025-03-10T11:20:00Z
+r005;u015;https://cdn.example.com/reels/saigon-hostel.mp4;Review hostel 50k/đêm ở Quận 1, Sài Gòn. Quá ổn cho dân #backpacking! #cheap #saigon;2500;2025-03-25T21:05:00Z
+r006;u017;https://cdn.example.com/reels/phuquoc-resort.mp4;Villa riêng có hồ bơi vô cực ở Phú Quốc. Nơi lý tưởng để #relax và #luxury. 🏖️;510;2025-04-05T15:00:00Z
+r007;u019;https://cdn.example.com/reels/hue-citadel.mp4;Dạo bước trong Đại Nội Huế, cảm nhận lịch sử #architecture và #history. #hue;320;2025-04-15T10:10:00Z
+r008;u021;https://cdn.example.com/reels/dalat-fairytale.mp4;Khu vui chơi cho bé ở Đà Lạt, cả nhà #family đều thích mê! #kids #dalat;780;2025-04-28T14:55:00Z
+r009;u025;https://cdn.example.com/reels/hcmc-cafe.mp4;Quán cà phê yên tĩnh, wifi mạnh cho #digitalnomad ở Quận 3. #work #cafe;450;2025-05-18T16:30:00Z
+r010;u027;https://cdn.example.com/reels/nhatrang-diving.mp4;Lần đầu #diving ở Hòn Mun, Nha Trang. San hô siêu đẹp! 🐠 #beach #snorkeling;620;2025-05-27T12:00:00Z
+r011;u029;https://cdn.example.com/reels/hagiang-pass.mp4;Cung đường đèo Mã Pí Lèng - thách thức cho #solo #adventure. #mountain;180;2025-06-08T07:15:00Z
+r012;u031;https://cdn.example.com/reels/fusion-yoga.mp4;Một buổi #yoga nhẹ nhàng tại resort Zen Retreat. #wellness #relax;290;2025-06-16T08:00:00Z
+r013;u033;https://cdn.example.com/reels/finedining-hcmc.mp4;Trải nghiệm #finedining và thử rượu #wine tại nhà hàng 3 sao Sài Gòn. 🥂;750;2025-06-28T20:30:00Z
+r014;u035;https://cdn.example.com/reels/central-highlands.mp4;Road trip Tây Nguyên: Hồ Tà Đùng và những con đường núi tuyệt đẹp. #roadtrip #phuot;160;2025-07-06T11:00:00Z
+r015;u037;https://cdn.example.com/reels/cheap-meal-hanoi.mp4;Bí quyết ăn no 50k/ngày ở Hà Nội cho #student và #cheap traveller. 🤑;3500;2025-07-16T17:40:00Z
+r016;u039;https://cdn.example.com/reels/danang-modern.mp4;Kiến trúc hiện đại của Đà Nẵng về đêm, tuyệt vời cho #architecture lover. #city;410;2025-07-27T22:00:00Z
+r017;u041;https://cdn.example.com/reels/hoian-lantern.mp4;Lễ hội đèn lồng Hội An lung linh quá xá! #festival #culture #hoian;980;2025-08-05T19:00:00Z
+r018;u044;https://cdn.example.com/reels/cucphuong-camping.mp4;Cắm trại qua đêm giữa rừng Cúc Phương. Không khí trong lành và #nature. #camping;220;2025-08-22T13:00:00Z
+r019;u046;https://cdn.example.com/reels/art-museum-hcmc.mp4;Bảo tàng Mỹ thuật Sài Gòn, nơi check-in lý tưởng cho tín đồ #art. #culture;550;2025-08-31T15:30:00Z
+r020;u048;https://cdn.example.com/reels/muicathe.mp4;Bình minh huyền ảo trên Mũi Kê Gà. Đáng để thuê #privatecar đi cả đêm! #photography #scenery;1100;2025-09-12T05:00:00Z
+r021;u050;https://cdn.example.com/reels/dalat-canyoning.mp4;Đu dây vượt thác Datanla, một trải nghiệm #adventure không thể quên. #climbing #dalat;380;2025-09-22T11:40:00Z
+r022;u052;https://cdn.example.com/reels/secluded-resort.mp4;Nghỉ dưỡng 3 ngày ở resort biệt lập tại Vịnh Ninh Vân. Quá #relax! #secluded #luxury;700;2025-09-30T17:00:00Z
+r023;u054;https://cdn.example.com/reels/linhunghoa.mp4;Kiến trúc độc đáo của Chùa Linh Ứng trên bán đảo Sơn Trà. #pagoda #architecture;190;2025-10-10T09:00:00Z
+r024;u055;https://cdn.example.com/reels/kitesurf-muine.mp4;Thử #watersport lướt ván diều ở Mũi Né. Khó nhưng cực đã! #adventure #beach;350;2025-10-17T15:15:00Z
+r025;u057;https://cdn.example.com/reels/city-shopping.mp4;Săn sale hàng hiệu ở trung tâm thương mại Sài Gòn. #shopping #city #luxury;910;2025-10-26T14:30:00Z
+r026;u059;https://cdn.example.com/reels/backpacker-cheap.mp4;Tổng kết chi phí 1 tuần du lịch #backpacking miền Tây. Chỉ bằng 1 đêm khách sạn! #solo #cheap;2100;2025-11-04T19:40:00Z
+r027;u061;https://cdn.example.com/reels/hanoi-graffiti.mp4;Phố Phùng Hưng và những bức #streetart đáng ngưỡng mộ của Hà Nội. #art #city;280;2025-11-16T16:00:00Z
+r028;u064;https://cdn.example.com/reels/thanglong.mp4;Khám phá Hoàng thành Thăng Long, di sản #history giữa lòng thủ đô. #ancient #culture;150;2025-11-30T11:30:00Z
+r029;u066;https://cdn.example.com/reels/sondoong-cave.mp4;Một góc hang Sơn Đoòng - trải nghiệm #adventure để đời! #cave #nature;450;2025-12-11T08:45:00Z
+r030;u070;https://cdn.example.com/reels/vegan-food.mp4;Top 5 quán chay #vegan ngon nhất Hội An. Ăn #healthy mà vẫn ngon! #food;580;2025-12-30T13:20:00Z
+r031;u073;https://cdn.example.com/reels/tamcoc-view.mp4;View toàn cảnh Tam Cốc từ đỉnh Hang Múa. #photography #scenery #ninhbinh;1050;2026-01-16T15:00:00Z
+r032;u076;https://cdn.example.com/reels/muaroinuoc.mp4;Tuyệt vời với show #puppet #folklore nghệ thuật múa rối nước. #culture;240;2026-01-30T19:50:00Z
+r033;u078;https://cdn.example.com/reels/hcmc-bus.mp4;Tour #citytour bằng xe buýt 2 tầng, ngắm Sài Gòn khác hẳn! #sightseeing;370;2026-02-10T14:00:00Z
+r034;u083;https://cdn.example.com/reels/pho-hanoi.mp4;Quán Phở gia truyền hơn 70 năm tuổi ở Hà Nội. #traditionalfood #food #history;1120;2026-03-08T12:00:00Z
+r035;u085;https://cdn.example.com/reels/phongnha-ecotour.mp4;Tìm hiểu về #wildlife và #ecology tại Vườn Quốc gia Phong Nha. #nature;210;2026-03-18T10:30:00Z
+r036;u087;https://cdn.example.com/reels/hanoi-opera.mp4;Tham dự buổi hòa nhạc tại Nhà Hát Lớn Hà Nội. #music #art #city;530;2026-03-27T20:00:00Z
+r037;u091;https://cdn.example.com/reels/hcmc-dailylife.mp4;Chụp được khoảnh khắc đời thường tuyệt đẹp trên đường phố Sài Gòn. #streetphotography #city #local;300;2026-04-18T16:45:00Z
+r038;u094;https://cdn.example.com/reels/organic-farm.mp4;Nông trại hữu cơ tại Đà Lạt, nơi lý tưởng cho #wellness và #farm tour. 🥬;180;2026-04-30T09:10:00Z
+r039;u097;https://cdn.example.com/reels/moutain-climb.mp4;Vừa hoàn thành tour leo núi mạo hiểm tại Tà Xùa. #adventure #climbing #mountain;420;2026-05-18T15:55:00Z
+r040;u099;https://cdn.example.com/reels/volunteer-local.mp4;Tham gia hoạt động #volunteer giúp đỡ người dân tộc thiểu số. #community #local;150;2026-05-28T10:25:00Z
+r041;u101;https://cdn.example.com/reels/scuba-diving.mp4;Lặn biển và khám phá tàu đắm ở Côn Đảo. #watersport #diving #adventure;680;2026-06-07T13:30:00Z
+r042;u104;https://cdn.example.com/reels/batrang-craft.mp4;Tự tay làm gốm ở làng nghề Bát Tràng. #ceramic #handicraft #culture;230;2026-06-22T14:40:00Z
+r043;u108;https://cdn.example.com/reels/luxury-cruise.mp4;Du thuyền 5 sao trên Vịnh Lan Hạ, cực kỳ #luxury và #relax. #cruise;820;2026-07-12T18:00:00Z
+r044;u111;https://cdn.example.com/reels/my_son_sanctuary.mp4;Thánh địa Mỹ Sơn, kiến trúc #cham và #history quá ấn tượng. #architecture;170;2026-07-28T10:00:00Z
+r045;u113;https://cdn.example.com/reels/new-route-phuot.mp4;Khám phá cung đường #newroute chưa từng đi ở Tây Bắc. #phuot #motorbike;200;2026-08-06T15:20:00Z
+r046;u116;https://cdn.example.com/reels/hcmc-nightfood.mp4;Top 3 món ăn vặt đêm ở Quận 4 Sài Gòn. #solo #streetfood #local;1300;2026-08-21T21:10:00Z
+r047;u120;https://cdn.example.com/reels/colonial-architecture.mp4;Kiến trúc Pháp #frenchcolonial tại Nhà thờ Đức Bà. #history #architecture;260;2026-09-12T11:00:00Z
+r048;u122;https://cdn.example.com/reels/highlands-trek.mp4;#Trekking đến thác nước Dray Nur, khám phá văn hóa #localculture Tây Nguyên. #highlands;190;2026-09-21T13:50:00Z
+r049;u124;https://cdn.example.com/reels/nhatrang-mudbath.mp4;Thư giãn tuyệt đối với dịch vụ #mudbath và #spa ở Nha Trang. #relax;390;2026-09-30T17:15:00Z
+r050;u127;https://cdn.example.com/reels/ancient-walking.mp4;Đi bộ khám phá các con phố #history ở Hà Nội một mình. #solo #walking;110;2026-10-15T16:00:00Z
