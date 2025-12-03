@@ -1,30 +1,91 @@
-import 'package:fe/models/data.dart';
+// lib/screens/profile/profile_screen.dart
 import 'package:fe/theme/app_theme.dart';
+import 'package:fe/services/api_service.dart';
+import 'package:fe/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
-
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  final String?
+  userId; // null = xem profile của mình, có giá trị = xem người khác
+  const ProfileScreen({super.key, this.userId});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  UserProfile user = mockCurrentUser;
+  Map<String, dynamic>? _userData;
+  List<dynamic> _bookingHistory = [];
+  List<dynamic> _userReels = []; // Thêm để hiển thị reel của người đó sau này
+  bool _isLoading = true;
+  bool _isCurrentUser = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _isCurrentUser = widget.userId == null;
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    setState(() => _isLoading = true);
+
+    try {
+      Map<String, dynamic>? profile;
+      List<dynamic> bookings = [];
+
+      if (_isCurrentUser) {
+        // Xem profile của mình
+        print('📱 Loading current user profile...');
+        profile = await ApiService.getUserProfile();
+        print('✅ Profile loaded: ${profile != null ? "Success" : "Null"}');
+        if (profile != null) {
+          print('   Name: ${profile['name']}');
+          print('   Email: ${profile['email']}');
+        }
+
+        print('📚 Loading bookings...');
+        bookings = await ApiService.getUserBookings();
+        print('✅ Bookings loaded: ${bookings.length} items');
+      } else {
+        // Xem profile người khác theo ID
+        print('👤 Loading user by ID: ${widget.userId}');
+        profile = await ApiService.getUserById(widget.userId!);
+        print('✅ Profile loaded: ${profile != null ? "Success" : "Null"}');
+        bookings = [];
+      }
+
+      if (profile == null) {
+        print('❌ Profile is null after API call');
+      }
+
+      setState(() {
+        _userData = profile;
+        _bookingHistory = _isCurrentUser ? bookings : [];
+        _isLoading = false;
+      });
+    } catch (e, stackTrace) {
+      print('❌ Error loading user data: $e');
+      print('Stack trace: $stackTrace');
+      setState(() => _isLoading = false);
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Không thể tải thông tin: $e')));
+      }
+    }
+  }
 
   void _editProfile(BuildContext context) {
-    // Mock Navigate to Edit Form
+    if (_userData == null) return;
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => EditProfileScreen(user: user),
+        builder: (context) => EditProfileScreen(userData: _userData!),
       ),
-    ).then((updatedUser) {
-      if (updatedUser != null && updatedUser is UserProfile) {
-        setState(() {
-          user = updatedUser;
-        });
+    ).then((updated) {
+      if (updated == true) {
+        _loadUserData();
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Cập nhật hồ sơ thành công!')),
         );
@@ -32,161 +93,280 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Hồ Sơ Cá Nhân'),
+  Future<void> _handleLogout() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Xác nhận đăng xuất'),
+        content: const Text('Bạn có chắc chắn muốn đăng xuất?'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.edit_rounded, color: AppColors.primaryBlue),
-            onPressed: () => _editProfile(context),
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Hủy'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text(
+              'Đăng xuất',
+              style: TextStyle(color: AppColors.errorRed),
+            ),
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Avatar và Thông tin cơ bản
-            Center(
-              child: Column(
-                children: [
-                  CircleAvatar(
-                    radius: 60,
-                    backgroundImage: NetworkImage(user.avatarUrl),
-                    backgroundColor: AppColors.accentLight,
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    user.name,
-                    style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.textDark),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    user.email,
-                    style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
-                  ),
-                  const SizedBox(height: 20),
-                ],
+    );
+
+    if (confirmed == true && mounted) {
+      await ApiService.logout();
+      await AuthService().logout();
+      Navigator.pushReplacementNamed(context, '/login');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_isLoading) {
+      return Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(backgroundColor: Colors.transparent, elevation: 0),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (_userData == null) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Hồ sơ')),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text('Không thể tải thông tin'),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: _loadUserData,
+                child: const Text('Thử lại'),
               ),
-            ),
+            ],
+          ),
+        ),
+      );
+    }
 
-            // Tiểu sử/Mô tả
-            _buildSectionTitle('Giới thiệu'),
-            Card(
-              elevation: 2,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(user.bio),
-              ),
-            ),
-            const SizedBox(height: 20),
+    final name = _userData!['name'] ?? 'Người dùng';
+    final email = _userData!['email'] ?? '';
+    final avatarUrl = _userData!['avatarUrl'];
 
-            // Sở thích
-            _buildSectionTitle('Sở thích du lịch'),
-            Wrap(
-              spacing: 10.0,
-              runSpacing: 10.0,
-              children: user.interests
-                  .map((interest) => Chip(
-                        label: Text(interest),
-                        backgroundColor: AppColors.primaryBlue.withOpacity(0.1),
-                        labelStyle: const TextStyle(color: AppColors.primaryBlue),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12)),
-                      ))
-                  .toList(),
-            ),
-            const SizedBox(height: 20),
-
-            // Ngân sách
-            _buildSectionTitle('Ngân sách (Kế hoạch AI)'),
-            _buildInfoRow(
-                Icons.account_balance_wallet_rounded, 'Mức Ngân Sách', user.budgetRange),
-            const SizedBox(height: 20),
-
-            // Lịch sử Du lịch
-            _buildSectionTitle('Lịch sử Du lịch (Mock)'),
-            _buildHistoryItem('Đà Lạt', '05/2024', Icons.bungalow_rounded),
-            _buildHistoryItem('Phú Quốc', '01/2024', Icons.beach_access_rounded),
-            _buildHistoryItem('Hà Nội', '10/2023', Icons.location_city_rounded),
-            const SizedBox(height: 30),
-
-            // Nút Đăng xuất
-            SizedBox(
-              width: double.infinity,
-              child: OutlinedButton.icon(
-                icon: const Icon(Icons.logout, color: AppColors.errorRed),
-                label: const Text('Đăng Xuất'),
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Đã đăng xuất!')),
-                  );
-                },
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: AppColors.errorRed,
-                  side: const BorderSide(color: AppColors.errorRed),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16)),
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black87),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Text(name, style: const TextStyle(color: Colors.black87)),
+        actions: _isCurrentUser
+            ? [
+                IconButton(
+                  icon: const Icon(
+                    Icons.edit_rounded,
+                    color: AppColors.primaryBlue,
+                  ),
+                  onPressed: () => _editProfile(context),
+                ),
+              ]
+            : null,
+      ),
+      body: RefreshIndicator(
+        onRefresh: _loadUserData,
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                radius: 60,
+                backgroundColor: AppColors.accentLight,
+                child: ClipOval(
+                  child: Image.network(
+                    avatarUrl ??
+                        'https://ui-avatars.com/api/?name=${Uri.encodeComponent(name)}&background=FF6B6B&color=fff&size=256',
+                    fit: BoxFit.cover,
+                    width: 120,
+                    height: 120,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return const CircularProgressIndicator();
+                    },
+                    errorBuilder: (context, error, stackTrace) {
+                      return Image.network(
+                        'https://ui-avatars.com/api/?name=${Uri.encodeComponent(name)}&background=random&color=fff&size=256',
+                        fit: BoxFit.cover,
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
-          ],
+              const SizedBox(height: 16),
+              Text(
+                name,
+                style: const TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                email,
+                style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
+              ),
+              const SizedBox(height: 24),
+
+              if (_userData!['bio'] != null &&
+                  _userData!['bio'].toString().isNotEmpty) ...[
+                Card(
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      _userData!['bio'],
+                      style: const TextStyle(fontSize: 15),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+              ],
+
+              if (_userData!['interests'] != null &&
+                  (_userData!['interests'] as List).isNotEmpty) ...[
+                const Text(
+                  'Sở thích du lịch',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                Wrap(
+                  spacing: 10,
+                  runSpacing: 10,
+                  children: (_userData!['interests'] as List)
+                      .map(
+                        (i) => Chip(
+                          label: Text(i.toString()),
+                          backgroundColor: AppColors.primaryBlue.withOpacity(
+                            0.1,
+                          ),
+                          labelStyle: const TextStyle(
+                            color: AppColors.primaryBlue,
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
+                const SizedBox(height: 20),
+              ],
+
+              // Chỉ hiện lịch sử đặt chỗ nếu là chính mình
+              if (_isCurrentUser) ...[
+                const Text(
+                  'Lịch sử Du lịch',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                if (_bookingHistory.isEmpty)
+                  const Card(
+                    child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Text('Chưa có lịch sử đặt chỗ'),
+                    ),
+                  )
+                else
+                  ..._bookingHistory
+                      .take(5)
+                      .map(
+                        (b) => _buildHistoryItem(
+                          b['serviceId']?['title'] ?? 'Dịch vụ',
+                          _formatDate(b['createdAt']),
+                          _getCategoryIcon(b['serviceId']?['category']),
+                        ),
+                      ),
+                const SizedBox(height: 20),
+              ],
+
+              // Chỉ hiện nút đăng xuất nếu là mình
+              if (_isCurrentUser)
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    icon: const Icon(Icons.logout, color: AppColors.errorRed),
+                    label: const Text(
+                      'Đăng Xuất',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    onPressed: _handleLogout,
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: AppColors.errorRed,
+                      side: const BorderSide(color: AppColors.errorRed),
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildSectionTitle(String title) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10.0),
-      child: Text(
-        title,
-        style: const TextStyle(
-            fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textDark),
-      ),
-    );
+  String _formatDate(String? dateStr) {
+    if (dateStr == null) return 'N/A';
+    try {
+      final date = DateTime.parse(dateStr);
+      return '${date.day}/${date.month}/${date.year}';
+    } catch (_) {
+      return 'N/A';
+    }
   }
 
-  Widget _buildInfoRow(IconData icon, String label, String value) {
-    return ListTile(
-      leading: Icon(icon, color: AppColors.primaryBlue),
-      title: Text(label),
-      trailing: Text(value,
-          style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.secondaryOrange)),
-      contentPadding: EdgeInsets.zero,
-    );
+  IconData _getCategoryIcon(String? category) {
+    switch (category) {
+      case 'Hotel':
+        return Icons.hotel_rounded;
+      case 'Tour':
+        return Icons.tour_rounded;
+      case 'Restaurant':
+        return Icons.restaurant_rounded;
+      case 'Flight':
+        return Icons.flight_rounded;
+      default:
+        return Icons.place_rounded;
+    }
   }
 
   Widget _buildHistoryItem(String title, String date, IconData icon) {
     return Card(
-      elevation: 1,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       margin: const EdgeInsets.only(bottom: 10),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: ListTile(
         leading: Icon(icon, color: AppColors.secondaryOrange),
         title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
-        subtitle: Text('Đã đi vào $date'),
+        subtitle: Text('Đặt vào $date'),
         trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-        onTap: () {},
       ),
     );
   }
 }
 
-// --- Form Chỉnh sửa Hồ sơ ---
+// EditProfileScreen giữ nguyên như cũ của bạn
 class EditProfileScreen extends StatefulWidget {
-  final UserProfile user;
-
-  const EditProfileScreen({super.key, required this.user});
-
+  final Map<String, dynamic> userData;
+  const EditProfileScreen({super.key, required this.userData});
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
 }
@@ -194,7 +374,9 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   late TextEditingController _nameController;
   late TextEditingController _bioController;
+  late TextEditingController _phoneController;
   late String _budget;
+  bool _isSaving = false;
 
   final List<String> availableInterests = [
     'Biển',
@@ -203,7 +385,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     'Nghỉ dưỡng',
     'Ẩm thực',
     'Cắm trại',
-    'Chụp ảnh'
+    'Chụp ảnh',
   ];
   late List<String> _selectedInterests;
 
@@ -212,23 +394,63 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController(text: widget.user.name);
-    _bioController = TextEditingController(text: widget.user.bio);
-    _budget = widget.user.budgetRange;
-    _selectedInterests = List.from(widget.user.interests);
+    _nameController = TextEditingController(
+      text: widget.userData['name'] ?? '',
+    );
+    _bioController = TextEditingController(text: widget.userData['bio'] ?? '');
+    _phoneController = TextEditingController(
+      text: widget.userData['contactPhone'] ?? '',
+    );
+    _budget = widget.userData['budgetRange'] ?? 'Trung bình';
+    _selectedInterests = widget.userData['interests'] != null
+        ? List<String>.from(widget.userData['interests'])
+        : [];
   }
 
-  void _saveProfile() {
-    final updatedUser = UserProfile(
-      id: widget.user.id,
-      name: _nameController.text,
-      email: widget.user.email,
-      avatarUrl: widget.user.avatarUrl,
-      bio: _bioController.text,
-      interests: _selectedInterests,
-      budgetRange: _budget,
-    );
-    Navigator.pop(context, updatedUser); // Trả về UserProfile mới
+  Future<void> _saveProfile() async {
+    if (_nameController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Vui lòng nhập tên')));
+      return;
+    }
+
+    setState(() => _isSaving = true);
+
+    try {
+      final result = await ApiService.updateUserProfile(
+        name: _nameController.text.trim(),
+        bio: _bioController.text.trim(),
+        interests: _selectedInterests,
+        budgetRange: _budget,
+        contactPhone: _phoneController.text.trim(),
+      );
+
+      if (result != null && mounted) {
+        Navigator.pop(context, true);
+      } else if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Cập nhật thất bại. Vui lòng thử lại.')),
+        );
+      }
+    } catch (e) {
+      print('Error saving profile: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Đã xảy ra lỗi. Vui lòng thử lại.')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isSaving = false);
+    }
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _bioController.dispose();
+    _phoneController.dispose();
+    super.dispose();
   }
 
   @override
@@ -237,12 +459,28 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       appBar: AppBar(
         title: const Text('Chỉnh Sửa Hồ Sơ'),
         actions: [
-          TextButton(
-            onPressed: _saveProfile,
-            child: const Text('Lưu',
+          if (_isSaving)
+            const Center(
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                ),
+              ),
+            )
+          else
+            TextButton(
+              onPressed: _saveProfile,
+              child: const Text(
+                'Lưu',
                 style: TextStyle(
-                    color: AppColors.primaryBlue, fontWeight: FontWeight.bold)),
-          ),
+                  color: AppColors.primaryBlue,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
         ],
       ),
       body: SingleChildScrollView(
@@ -268,14 +506,26 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 prefixIcon: Icon(Icons.description_rounded),
               ),
             ),
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: _phoneController,
+              keyboardType: TextInputType.phone,
+              decoration: const InputDecoration(
+                labelText: 'Số điện thoại',
+                prefixIcon: Icon(Icons.phone_rounded),
+              ),
+            ),
             const SizedBox(height: 24),
 
             // Ngân sách du lịch
-            const Text('Ngân sách Du lịch (Dùng cho AI)',
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textDark)),
+            const Text(
+              'Ngân sách Du lịch (Dùng cho AI)',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textDark,
+              ),
+            ),
             const SizedBox(height: 10),
             DropdownButtonFormField<String>(
               value: _budget,
@@ -297,11 +547,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             const SizedBox(height: 24),
 
             // Sở thích du lịch
-            const Text('Chọn Sở thích Du lịch',
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textDark)),
+            const Text(
+              'Chọn Sở thích Du lịch',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textDark,
+              ),
+            ),
             const SizedBox(height: 10),
             Wrap(
               spacing: 10.0,
@@ -317,7 +570,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       ? AppColors.secondaryOrange
                       : Colors.grey.shade200,
                   labelStyle: TextStyle(
-                    color: isSelected ? AppColors.textLight : AppColors.textDark,
+                    color: isSelected
+                        ? AppColors.textLight
+                        : AppColors.textDark,
                   ),
                   onPressed: () {
                     setState(() {
@@ -337,3 +592,5 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 }
+
+// ... (giữ nguyên toàn bộ EditProfileScreen bạn đã viết)

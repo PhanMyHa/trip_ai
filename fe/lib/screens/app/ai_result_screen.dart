@@ -1,10 +1,57 @@
 import 'dart:convert';
-import 'package:fe/models/data.dart';
+import 'package:fe/models/service.dart';
+import 'package:fe/services/api_service.dart';
 import 'package:fe/theme/app_theme.dart';
 import 'package:fe/widgets/common_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// Model classes for AI data
+class AIRecommendation {
+  final String queryId;
+  final String destination;
+  final String travelerProfile;
+  final List<DailySchedule> schedule;
+
+  AIRecommendation({
+    required this.queryId,
+    required this.destination,
+    required this.travelerProfile,
+    required this.schedule,
+  });
+}
+
+class DailySchedule {
+  final int day;
+  final String date;
+  final String theme;
+  final String weatherForecast;
+  final String aiTip;
+  final List<Activity> activities;
+
+  DailySchedule({
+    required this.day,
+    required this.date,
+    required this.theme,
+    required this.weatherForecast,
+    required this.aiTip,
+    required this.activities,
+  });
+}
+
+class Activity {
+  final String time;
+  final String title;
+  final String placeId;
+  final String notes;
+
+  Activity({
+    required this.time,
+    required this.title,
+    required this.placeId,
+    required this.notes,
+  });
+}
 
 // Service giả lập để load AI JSON
 class AIService {
@@ -16,21 +63,25 @@ class AIService {
 
     // Chuyển đổi JSON sang Dart object
     List<DailySchedule> schedules = (jsonResult['schedule'] as List)
-        .map((s) => DailySchedule(
-              day: s['day'],
-              date: s['date'],
-              theme: s['theme'],
-              weatherForecast: s['weather_forecast'],
-              aiTip: s['ai_tip'],
-              activities: (s['activities'] as List)
-                  .map((a) => Activity(
-                        time: a['time'],
-                        title: a['title'],
-                        placeId: a['place_id'],
-                        notes: a['notes'],
-                      ))
-                  .toList(),
-            ))
+        .map(
+          (s) => DailySchedule(
+            day: s['day'],
+            date: s['date'],
+            theme: s['theme'],
+            weatherForecast: s['weather_forecast'],
+            aiTip: s['ai_tip'],
+            activities: (s['activities'] as List)
+                .map(
+                  (a) => Activity(
+                    time: a['time'],
+                    title: a['title'],
+                    placeId: a['place_id'],
+                    notes: a['notes'],
+                  ),
+                )
+                .toList(),
+          ),
+        )
         .toList();
 
     return AIRecommendation(
@@ -50,13 +101,83 @@ class AIResultScreen extends StatefulWidget {
 }
 
 class _AIResultScreenState extends State<AIResultScreen> {
-  late Future<AIRecommendation> _aiResultFuture;
+  AIRecommendation? _aiResult;
   int _selectedDayIndex = 0;
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _aiResultFuture = AIService().fetchMockAIRecommendation();
+    _loadAIResult();
+  }
+
+  void _loadAIResult() {
+    // Get data from route arguments (real AI data) or load mock data
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final args = ModalRoute.of(context)?.settings.arguments;
+
+      if (args != null && args is Map<String, dynamic>) {
+        // Real AI data from API
+        print('📊 Loading real AI data from API');
+        _loadRealAIData(args);
+      } else {
+        // Fallback to mock data
+        print('📋 Loading mock AI data');
+        _loadMockData();
+      }
+    });
+  }
+
+  void _loadRealAIData(Map<String, dynamic> data) {
+    try {
+      List<DailySchedule> schedules = (data['dailySchedule'] as List)
+          .map(
+            (s) => DailySchedule(
+              day: s['day'],
+              date: s['date'] ?? 'Day ${s['day']}',
+              theme: s['theme'] ?? 'Travel Day',
+              weatherForecast: s['weather_forecast'] ?? 'Sunny, 25-30°C',
+              aiTip: s['ai_tip'] ?? 'Enjoy your trip!',
+              activities: (s['activities'] as List)
+                  .map(
+                    (a) => Activity(
+                      time: a['time'],
+                      title: a['title'],
+                      placeId: a['place_id'],
+                      notes: a['notes'] ?? '',
+                    ),
+                  )
+                  .toList(),
+            ),
+          )
+          .toList();
+
+      setState(() {
+        _aiResult = AIRecommendation(
+          queryId: 'ai-${DateTime.now().millisecondsSinceEpoch}',
+          destination: data['destination'] ?? 'Unknown',
+          travelerProfile: '${data['travelers']} người - ${data['budget']}',
+          schedule: schedules,
+        );
+        _isLoading = false;
+      });
+    } catch (e) {
+      print('Error loading real AI data: $e');
+      _loadMockData();
+    }
+  }
+
+  Future<void> _loadMockData() async {
+    try {
+      final mockResult = await AIService().fetchMockAIRecommendation();
+      setState(() {
+        _aiResult = mockResult;
+        _isLoading = false;
+      });
+    } catch (e) {
+      print('Error loading mock data: $e');
+      setState(() => _isLoading = false);
+    }
   }
 
   @override
@@ -73,54 +194,47 @@ class _AIResultScreenState extends State<AIResultScreen> {
           ),
         ],
       ),
-      body: FutureBuilder<AIRecommendation>(
-        future: _aiResultFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasError) {
-            return Center(child: Text('Lỗi tải dữ liệu: ${snapshot.error}'));
-          }
-          if (!snapshot.hasData || snapshot.data!.schedule.isEmpty) {
-            return const Center(child: Text('Không tìm thấy lịch trình.'));
-          }
-
-          final result = snapshot.data!;
-          final currentDay = result.schedule[_selectedDayIndex];
-
-          return Column(
-            children: [
-              _buildHeader(result),
-              _buildDaySelector(result.schedule),
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.all(16.0),
-                  children: [
-                    _buildWeatherAndTheme(currentDay),
-                    const SizedBox(height: 20),
-                    _buildAITipCard(currentDay),
-                    const SizedBox(height: 20),
-                    ...currentDay.activities.map((activity) =>
-                        _buildActivityTimeline(context, activity)),
-                    const SizedBox(height: 80), // Padding cho FAB
-                  ],
-                ),
-              ),
-            ],
-          );
-        },
-      ),
-      floatingActionButton: AIActionButton(
-        text: 'Regenerate with AI',
-        onPressed: () {
-          // Xử lý tạo lại lịch trình
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Đang tạo lại lịch trình...')),
-          );
-        },
-      ),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : _aiResult == null || _aiResult!.schedule.isEmpty
+          ? const Center(child: Text('Không tìm thấy lịch trình.'))
+          : _buildContent(),
+      floatingActionButton: !_isLoading && _aiResult != null
+          ? AIActionButton(
+              text: 'Regenerate with AI',
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, '/ai_request');
+              },
+            )
+          : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    );
+  }
+
+  Widget _buildContent() {
+    final result = _aiResult!;
+    final currentDay = result.schedule[_selectedDayIndex];
+
+    return Column(
+      children: [
+        _buildHeader(result),
+        _buildDaySelector(result.schedule),
+        Expanded(
+          child: ListView(
+            padding: const EdgeInsets.all(16.0),
+            children: [
+              _buildWeatherAndTheme(currentDay),
+              const SizedBox(height: 20),
+              _buildAITipCard(currentDay),
+              const SizedBox(height: 20),
+              ...currentDay.activities.map(
+                (activity) => _buildActivityTimeline(context, activity),
+              ),
+              const SizedBox(height: 80), // Padding cho FAB
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -135,9 +249,10 @@ class _AIResultScreenState extends State<AIResultScreen> {
           Text(
             result.destination,
             style: const TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.w900,
-                color: AppColors.primaryBlue),
+              fontSize: 28,
+              fontWeight: FontWeight.w900,
+              color: AppColors.primaryBlue,
+            ),
           ),
           const SizedBox(height: 4),
           Text(
@@ -161,7 +276,11 @@ class _AIResultScreenState extends State<AIResultScreen> {
           final isSelected = index == _selectedDayIndex;
           return Padding(
             padding: EdgeInsets.fromLTRB(
-                index == 0 ? 16 : 8, 8, index == schedules.length - 1 ? 16 : 8, 8),
+              index == 0 ? 16 : 8,
+              8,
+              index == schedules.length - 1 ? 16 : 8,
+              8,
+            ),
             child: ChoiceChip(
               label: Text('Ngày ${schedules[index].day}'),
               selected: isSelected,
@@ -202,8 +321,11 @@ class _AIResultScreenState extends State<AIResultScreen> {
           gradientColors: const [AppColors.accentLight, AppColors.primaryBlue],
           child: Row(
             children: [
-              const Icon(Icons.cloud_queue_rounded,
-                  color: AppColors.textLight, size: 28),
+              const Icon(
+                Icons.cloud_queue_rounded,
+                color: AppColors.textLight,
+                size: 28,
+              ),
               const SizedBox(width: 10),
               Expanded(
                 child: Column(
@@ -212,7 +334,9 @@ class _AIResultScreenState extends State<AIResultScreen> {
                     Text(
                       'Thời tiết: ${day.weatherForecast}',
                       style: const TextStyle(
-                          color: AppColors.textLight, fontWeight: FontWeight.w600),
+                        color: AppColors.textLight,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                     Text(
                       'Chủ đề: ${day.theme}',
@@ -242,11 +366,14 @@ class _AIResultScreenState extends State<AIResultScreen> {
               children: [
                 Icon(Icons.lightbulb_outline, color: AppColors.secondaryOrange),
                 SizedBox(width: 8),
-                Text('Mẹo AI',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: AppColors.secondaryOrange)),
+                Text(
+                  'Mẹo AI',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: AppColors.secondaryOrange,
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 8),
@@ -270,7 +397,9 @@ class _AIResultScreenState extends State<AIResultScreen> {
               Text(
                 activity.time,
                 style: const TextStyle(
-                    fontWeight: FontWeight.bold, color: AppColors.primaryBlue),
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primaryBlue,
+                ),
               ),
               Container(
                 width: 2,
@@ -292,7 +421,9 @@ class _AIResultScreenState extends State<AIResultScreen> {
           Expanded(
             child: Card(
               elevation: 2,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -301,14 +432,18 @@ class _AIResultScreenState extends State<AIResultScreen> {
                     Text(
                       activity.title,
                       style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: AppColors.textDark),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: AppColors.textDark,
+                      ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       activity.notes,
-                      style: TextStyle(color: Colors.grey.shade600, fontSize: 13),
+                      style: TextStyle(
+                        color: Colors.grey.shade600,
+                        fontSize: 13,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Align(
@@ -316,15 +451,28 @@ class _AIResultScreenState extends State<AIResultScreen> {
                       child: TextButton.icon(
                         icon: const Icon(Icons.location_on, size: 18),
                         label: const Text('Xem Địa điểm'),
-                        onPressed: () {
-                          // Giả lập tìm địa điểm theo placeId
-                          final place = mockPlaces.firstWhere(
-                              (p) => p.id == activity.placeId,
-                              orElse: () => mockPlaces.first);
-                          Navigator.pushNamed(context, '/place_detail', arguments: place);
+                        onPressed: () async {
+                          // Fetch service by ID or use first available
+                          final services = await ApiService.getServices();
+                          if (services.isNotEmpty) {
+                            // Try to find by ID or use first service
+                            final service = services.firstWhere(
+                              (s) =>
+                                  s.id == activity.placeId ||
+                                  s.serviceId == activity.placeId,
+                              orElse: () => services.first,
+                            );
+                            if (context.mounted) {
+                              Navigator.pushNamed(
+                                context,
+                                '/place_detail',
+                                arguments: service,
+                              );
+                            }
+                          }
                         },
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

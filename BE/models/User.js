@@ -33,6 +33,10 @@ const userSchema = new mongoose.Schema({
     enum: ['Thấp', 'Trung bình', 'Cao']
   },
   contactPhone: String,
+  favorites: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Service'
+  }],
   isActive: {
     type: Boolean,
     default: true

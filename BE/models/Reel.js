@@ -3,46 +3,57 @@ const mongoose = require('mongoose');
 const reelSchema = new mongoose.Schema({
   reelId: {
     type: String,
-    unique: true,
-    required: true
+    required: true,
+    unique: true
   },
   userId: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
+    required: true
+  },
+  serviceId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Service',
     required: true
   },
   videoUrl: {
     type: String,
     required: true
   },
-  thumbnailUrl: String,
-  caption: String,
-  location: String,
-  likes: [{
-    userId: String,
-    createdAt: {
-      type: Date,
-      default: Date.now
-    }
-  }],
-  comments: [{
-    userId: String,
-    text: String,
-    createdAt: {
-      type: Date,
-      default: Date.now
-    }
+  caption: {
+    type: String,
+    required: true
+  },
+  hashtags: [{
+    type: String
   }],
   views: {
     type: Number,
     default: 0
   },
-  isActive: {
-    type: Boolean,
-    default: true
-  }
+  likes: {
+    type: Number,
+    default: 0
+  },
+  comments: {
+    type: Number,
+    default: 0
+  },
+  shares: {
+    type: Number,
+    default: 0
+  },
+  likedBy: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }]
 }, {
   timestamps: true
 });
+
+// Index for better query performance
+reelSchema.index({ userId: 1, createdAt: -1 });
+reelSchema.index({ serviceId: 1 });
+reelSchema.index({ hashtags: 1 });
 
 module.exports = mongoose.model('Reel', reelSchema);

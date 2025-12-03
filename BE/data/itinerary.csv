@@ -1,0 +1,2 @@
+itineraryId;userId;destination;travelProfile;schedule;isSaved;createdAt
+ITN001;692e880ac8f7687fe92b282f;Đà Lạt;{"people":2,"budget":"Trung bình","interests":["Nhiếp ảnh","Ẩm thực"],"travelStyle":"Thư giãn"};[{"day":1,"date":"2025-12-20","theme":"Khám phá thành phố sương mù","activities":[{"time":"08:00","title":"Đón tại sân bay Liên Khương","notes":"Xe riêng"},{"time":"10:00","title":"Nhận phòng Queen Homestay","placeId":"692e880ac8f7687fe92b2836"},{"time":"14:00","title":"Tham quan Hồ Xuân Hương & Chợ Đà Lạt"}]}];true;Tue Dec 02 2025 13:32:42 GMT+0700 (Giờ Đông Dương)

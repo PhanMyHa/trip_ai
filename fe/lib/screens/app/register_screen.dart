@@ -1,4 +1,5 @@
-import 'package:fe/models/data.dart';
+
+import 'package:fe/models/user.dart';
 import 'package:fe/screens/app/login_screen.dart';
 import 'package:fe/services/api_service.dart';
 import 'package:fe/theme/app_theme.dart';

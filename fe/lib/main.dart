@@ -1,4 +1,5 @@
-import 'package:fe/models/data.dart';
+import 'package:fe/models/booking.dart';
+import 'package:fe/models/service.dart';
 import 'package:fe/screens/app/advanced_search_screen.dart';
 import 'package:fe/screens/app/ai_request_srceen.dart';
 import 'package:fe/screens/app/ai_result_screen.dart';
@@ -21,13 +22,18 @@ import 'package:fe/screens/traveler/user_profile_screen.dart';
 import 'package:fe/services/auth_service.dart';
 import 'package:fe/theme/app_theme.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final authService = AuthService();
   await authService.loadUserFromStorage();
-  runApp(const TravelAIApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => authService,
+      child: const TravelAIApp(),
+    ),
+  );
 }
 
 class TravelAIApp extends StatelessWidget {
@@ -35,13 +41,12 @@ class TravelAIApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     final Map<String, Widget Function(BuildContext)> appRoutes = {
       // --- AUTH & CORE FLOW ---
-      '/splash': (context) => const SplashScreen(), 
-      '/login': (context) => const LoginScreen(), 
-      '/register': (context) => const RegisterScreen(), 
-      
+      '/splash': (context) => const SplashScreen(),
+      '/login': (context) => const LoginScreen(),
+      '/register': (context) => const RegisterScreen(),
+
       // --- TRAVELER CORE ---
       '/': (context) => const MainScreen(),
       '/search': (context) => const SearchScreen(),
@@ -52,16 +57,15 @@ class TravelAIApp extends StatelessWidget {
       '/chat_list': (context) => const ChatListScreen(),
       '/voucher': (context) => const VoucherScreen(),
       '/notifications': (context) => const NotificationScreen(),
-      
+
       // --- BOOKING & PAYMENT ---
-      '/booking': (context) => const BookingScreen(), 
-      // Checkout và Confirmation sẽ dùng onGenerateRoute vì cần arguments
+      // BookingScreen, Checkout và Confirmation sẽ dùng onGenerateRoute vì cần arguments
       '/my_bookings': (context) => const MyBookingsScreen(), // Mới
-      
       // --- PROVIDER CORE ---
       '/provider_dashboard': (context) => const ProviderDashboard(),
-      '/manage_services': (context) => const ManageServiceScreen(), 
-      '/provider_management': (context) => const ProviderManagementScreen(), // Mới (Quản lý Bookings, Leads, Analytics)
+      '/manage_services': (context) => const ManageServiceScreen(),
+      '/provider_management': (context) =>
+          const ProviderManagementScreen(), // Mới (Quản lý Bookings, Leads, Analytics)
     };
 
     return MaterialApp(
@@ -72,46 +76,45 @@ class TravelAIApp extends StatelessWidget {
       routes: appRoutes,
       onGenerateRoute: (settings) {
         if (settings.name == '/place_detail') {
-          final args = settings.arguments as Place;
+          final args = settings.arguments as Service;
           return MaterialPageRoute(
             builder: (context) {
-              return PlaceDetailScreen(place: args);
+              return PlaceDetailScreen(service: args);
             },
           );
         }
-        
+
         // --- Xử lý BookingScreen với arguments ---
         if (settings.name == '/booking') {
-            final args = settings.arguments as Map<String, dynamic>?;
-            return MaterialPageRoute(
-                builder: (context) => BookingScreen(
-                    initialTab: args?['initialTab'] ?? 'Hotel',
-                    placeName: args?['placeName'],
-                ),
-            );
+          final args = settings.arguments as Service;
+          return MaterialPageRoute(
+            builder: (context) =>
+                BookingScreen(service: args, initialTab: 'Hotel'),
+          );
         }
-        
+
         // --- Xử lý CheckoutScreen với arguments ---
         if (settings.name == '/checkout') {
-            final args = settings.arguments as BookingSummary?;
-            // Dùng mockSummary nếu không có args (đảm bảo không lỗi)
-            return MaterialPageRoute(
-                builder: (context) => CheckoutScreen(
-                    summary: args ?? mockSummary, 
-                ),
-            );
+          final args = settings.arguments as Map<String, dynamic>;
+          return MaterialPageRoute(
+            builder: (context) => CheckoutScreen(
+              service: args['service'] as Service,
+              checkInDate: args['checkInDate'] as DateTime,
+              checkOutDate: args['checkOutDate'] as DateTime,
+              numberOfGuests: args['numberOfGuests'] as int,
+              specialRequests: args['specialRequests'] as String?,
+            ),
+          );
         }
-        
+
         // --- Xử lý BookingConfirmationScreen với arguments ---
         if (settings.name == '/booking_confirmation') {
-            final args = settings.arguments as BookingSummary;
-            return MaterialPageRoute(
-                builder: (context) => BookingConfirmationScreen(
-                    summary: args,
-                ),
-            );
+          final args = settings.arguments as Booking;
+          return MaterialPageRoute(
+            builder: (context) => BookingConfirmationScreen(booking: args),
+          );
         }
-        
+
         return null;
       },
     );
@@ -201,7 +204,8 @@ class NotificationScreen extends StatelessWidget {
   final List<Map<String, dynamic>> mockNotifications = const [
     {
       'title': 'AI: Lịch trình Đà Lạt đã sẵn sàng!',
-      'subtitle': 'Lịch trình 3 ngày đã được cá nhân hóa theo sở thích của bạn. Xem ngay.',
+      'subtitle':
+          'Lịch trình 3 ngày đã được cá nhân hóa theo sở thích của bạn. Xem ngay.',
       'icon': Icons.psychology_rounded,
       'color': AppColors.secondaryOrange,
       'read': false,
@@ -225,29 +229,49 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Import NotificationCard từ common_widgets.dart
-    final NotificationCard = (
-        {required String title, required String subtitle, required IconData icon, required Color iconColor, required bool isRead}) =>
-        // Giả lập NotificationCard vì nó không thể được import trong ngữ cảnh này
-        Card(
-          elevation: 2,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          child: ListTile(
-            leading: CircleAvatar(
-              backgroundColor: iconColor.withOpacity(0.1),
-              child: Icon(icon, color: iconColor),
-            ),
-            title: Text(title, style: TextStyle(fontWeight: isRead ? FontWeight.normal : FontWeight.bold)),
-            subtitle: Text(subtitle, maxLines: 2, overflow: TextOverflow.ellipsis),
-            trailing: isRead ? null : const Icon(Icons.circle, color: AppColors.secondaryOrange, size: 8),
-            onTap: () {},
-          ),
-        );
-
+    final NotificationCard =
+        ({
+          required String title,
+          required String subtitle,
+          required IconData icon,
+          required Color iconColor,
+          required bool isRead,
+        }) =>
+            // Giả lập NotificationCard vì nó không thể được import trong ngữ cảnh này
+            Card(
+              elevation: 2,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: iconColor.withOpacity(0.1),
+                  child: Icon(icon, color: iconColor),
+                ),
+                title: Text(
+                  title,
+                  style: TextStyle(
+                    fontWeight: isRead ? FontWeight.normal : FontWeight.bold,
+                  ),
+                ),
+                subtitle: Text(
+                  subtitle,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                trailing: isRead
+                    ? null
+                    : const Icon(
+                        Icons.circle,
+                        color: AppColors.secondaryOrange,
+                        size: 8,
+                      ),
+                onTap: () {},
+              ),
+            );
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Thông Báo'),
-      ),
+      appBar: AppBar(title: const Text('Thông Báo')),
       body: ListView.builder(
         padding: const EdgeInsets.all(16.0),
         itemCount: mockNotifications.length,

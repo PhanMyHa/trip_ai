@@ -7,7 +7,7 @@ const serviceSchema = new mongoose.Schema({
     required: true
   },
   providerId: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },
@@ -17,28 +17,47 @@ const serviceSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    required: true,
-    enum: ['Hotel', 'Tour', 'Car', 'Flight', 'Restaurant']
+    enum: ['Hotel', 'Tour', 'Restaurant', 'Flight'],
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
   },
   location: {
-    lat: Number,
-    lng: Number,
-    city: String,
-    address: String
+    city: {
+      type: String,
+      required: true
+    },
+    province: String,
+    address: String,
+    latitude: Number,
+    longitude: Number
   },
-  description: String,
-  imageUrl: String,
   price: {
     type: Number,
     required: true
   },
+  images: [{
+    type: String
+  }],
+  amenities: [{
+    type: String
+  }],
   rating: {
     type: Number,
     default: 0,
     min: 0,
     max: 5
   },
-  features: [String],
+  reviewCount: {
+    type: Number,
+    default: 0
+  },
+  isAvailable: {
+    type: Boolean,
+    default: true
+  },
   isActive: {
     type: Boolean,
     default: true
@@ -46,5 +65,10 @@ const serviceSchema = new mongoose.Schema({
 }, {
   timestamps: true
 });
+
+// Index cho search
+serviceSchema.index({ title: 'text', description: 'text' });
+serviceSchema.index({ category: 1, rating: -1 });
+serviceSchema.index({ 'location.city': 1 });
 
 module.exports = mongoose.model('Service', serviceSchema);

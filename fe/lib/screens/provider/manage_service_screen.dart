@@ -1,29 +1,33 @@
-import 'package:fe/models/data.dart';
+import 'package:fe/models/service.dart';
+import 'package:fe/services/api_service.dart';
 import 'package:fe/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
-// Mock danh sách dịch vụ đã đăng
-final mockProviderServices = [
-  Place(
-    id: 'S001',
-    name: 'Khách sạn Đồi Thông',
-    location: 'Đà Lạt',
-    category: 'Khách sạn',
-    rating: 4.8,
-    priceFrom: 1800000,
-  ),
-  Place(
-    id: 'S002',
-    name: 'Tour Cắm trại Hồ Tuyền Lâm',
-    location: 'Đà Lạt',
-    category: 'Tour',
-    rating: 4.5,
-    priceFrom: 850000,
-  ),
-];
-
-class ManageServiceScreen extends StatelessWidget {
+class ManageServiceScreen extends StatefulWidget {
   const ManageServiceScreen({super.key});
+
+  @override
+  State<ManageServiceScreen> createState() => _ManageServiceScreenState();
+}
+
+class _ManageServiceScreenState extends State<ManageServiceScreen> {
+  List<Service> _services = [];
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadServices();
+  }
+
+  Future<void> _loadServices() async {
+    setState(() => _isLoading = true);
+    final services = await ApiService.getServices();
+    setState(() {
+      _services = services;
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,11 +60,24 @@ class ManageServiceScreen extends StatelessWidget {
 
   // --- Tab: Danh sách Dịch vụ ---
   Widget _buildServiceList(BuildContext context) {
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (_services.isEmpty) {
+      return const Center(
+        child: Padding(
+          padding: EdgeInsets.all(20.0),
+          child: Text('Chưa có dịch vụ nào'),
+        ),
+      );
+    }
+
     return ListView.builder(
       padding: const EdgeInsets.all(16.0),
-      itemCount: mockProviderServices.length,
+      itemCount: _services.length,
       itemBuilder: (context, index) {
-        final service = mockProviderServices[index];
+        final service = _services[index];
         return Card(
           elevation: 2,
           margin: const EdgeInsets.only(bottom: 15),
@@ -78,21 +95,21 @@ class ManageServiceScreen extends StatelessWidget {
               ),
             ),
             title: Text(
-              service.name,
+              service.title,
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            subtitle: Text('${service.location} - ${service.category}'),
+            subtitle: Text('${service.location.city} - ${service.category}'),
             trailing: PopupMenuButton<String>(
               onSelected: (value) {
                 if (value == 'edit') {
                   // Giả lập mở form sửa
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Sửa dịch vụ: ${service.name}')),
+                    SnackBar(content: Text('Sửa dịch vụ: ${service.title}')),
                   );
                 } else if (value == 'delete') {
                   // Giả lập xóa
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Xóa dịch vụ: ${service.name}')),
+                    SnackBar(content: Text('Xóa dịch vụ: ${service.title}')),
                   );
                 }
               },

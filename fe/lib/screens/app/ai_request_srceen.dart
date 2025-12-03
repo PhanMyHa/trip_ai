@@ -1,8 +1,8 @@
 import 'package:fe/theme/app_theme.dart';
 import 'package:fe/widgets/common_widget.dart';
 import 'package:flutter/material.dart';
-
-
+import 'package:fe/services/api_service.dart';
+import 'package:intl/intl.dart';
 
 class AIRequestScreen extends StatefulWidget {
   const AIRequestScreen({super.key});
@@ -16,18 +16,28 @@ class _AIRequestScreenState extends State<AIRequestScreen> {
   String _destination = '';
   String _travelDates = '3 Ngày 2 Đêm';
   String _travelers = '2 Người';
-  String _budget = 'Trung bình (3M - 10M)';
+  String _budget = 'Trung bình';
   String _notes = '';
 
-  final List<String> datesOptions = ['2 Ngày 1 Đêm', '3 Ngày 2 Đêm', '4 Ngày 3 Đêm', 'Tùy chọn'];
-  final List<String> travelersOptions = ['1 Người', '2 Người', '3-5 Người', 'Gia đình'];
-  final List<String> budgetOptions = ['Thấp (< 3M)', 'Trung bình (3M - 10M)', 'Cao (> 10M)'];
+  final List<String> datesOptions = [
+    '2 Ngày 1 Đêm',
+    '3 Ngày 2 Đêm',
+    '4 Ngày 3 Đêm',
+    '5 Ngày 4 Đêm',
+  ];
+  final List<String> travelersOptions = [
+    '1 Người',
+    '2 Người',
+    '3-5 Người',
+    'Gia đình',
+  ];
+  final List<String> budgetOptions = ['Thấp', 'Trung bình', 'Cao'];
 
-  void _submitRequest() {
+  void _submitRequest() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      // Giả lập logic gửi yêu cầu và chuyển sang màn hình kết quả
+      // Show loading dialog
       showDialog(
         context: context,
         barrierDismissible: false,
@@ -37,27 +47,78 @@ class _AIRequestScreenState extends State<AIRequestScreen> {
             children: [
               CircularProgressIndicator(color: AppColors.primaryBlue),
               SizedBox(height: 15),
-              Text('AI đang lập kế hoạch chuyến đi hoàn hảo cho bạn...',
-                  textAlign: TextAlign.center),
+              Text(
+                'AI đang lập kế hoạch chuyến đi hoàn hảo cho bạn...',
+                textAlign: TextAlign.center,
+              ),
             ],
           ),
         ),
       );
 
-      // Delay 3 giây để mô phỏng thời gian AI xử lý
-      Future.delayed(const Duration(seconds: 3), () {
-        Navigator.pop(context); // Đóng dialog
-        Navigator.pushNamed(context, '/ai_result');
-      });
+      try {
+        // Parse travel dates to get number of days
+        int days = int.parse(_travelDates.split(' ')[0]);
+
+        // Parse travelers count
+        int travelersCount = 2;
+        if (_travelers.contains('1'))
+          travelersCount = 1;
+        else if (_travelers.contains('3-5'))
+          travelersCount = 4;
+        else if (_travelers.contains('Gia đình'))
+          travelersCount = 4;
+
+        // Calculate start and end dates
+        DateTime startDate = DateTime.now().add(const Duration(days: 7));
+        DateTime endDate = startDate.add(Duration(days: days - 1));
+
+        // Extract interests from notes
+        List<String> interests = [];
+        if (_notes.isNotEmpty) {
+          interests = _notes.split(',').map((e) => e.trim()).toList();
+        }
+
+        // Call AI API
+        final result = await ApiService.generateAIItinerary(
+          destination: _destination,
+          startDate: DateFormat('yyyy-MM-dd').format(startDate),
+          endDate: DateFormat('yyyy-MM-dd').format(endDate),
+          travelers: travelersCount,
+          budget: _budget,
+          interests: interests.isNotEmpty ? interests : null,
+        );
+
+        if (!mounted) return;
+        Navigator.pop(context); // Close loading dialog
+
+        if (result != null) {
+          // Navigate to result screen with AI data
+          Navigator.pushNamed(context, '/ai_result', arguments: result);
+        } else {
+          // Show error
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Không thể tạo lịch trình. Vui lòng thử lại sau.'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      } catch (e) {
+        if (!mounted) return;
+        Navigator.pop(context); // Close loading dialog
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Lỗi: $e'), backgroundColor: Colors.red),
+        );
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Yêu Cầu Lập Lịch Trình AI'),
-      ),
+      appBar: AppBar(title: const Text('Yêu Cầu Lập Lịch Trình AI')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Form(
@@ -103,9 +164,10 @@ class _AIRequestScreenState extends State<AIRequestScreen> {
                 Text(
                   'Lập Kế Hoạch Cá Nhân Hóa',
                   style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textLight),
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textLight,
+                  ),
                 ),
                 SizedBox(height: 4),
                 Text(
@@ -138,45 +200,50 @@ class _AIRequestScreenState extends State<AIRequestScreen> {
   }
 
   Widget _buildDropdowns() {
-  return Row(
-    children: [
-      Expanded(
-        child: DropdownButtonFormField<String>(
-          isExpanded: true,
-          value: _travelDates,
-          decoration: const InputDecoration(
-            isDense: true,
-            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            labelText: 'Thời gian đi',
-            prefixIcon: Icon(Icons.date_range_rounded, size: 18),
+    return Row(
+      children: [
+        Expanded(
+          child: DropdownButtonFormField<String>(
+            isExpanded: true,
+            value: _travelDates,
+            decoration: const InputDecoration(
+              isDense: true,
+              contentPadding: EdgeInsets.symmetric(
+                vertical: 10,
+                horizontal: 10,
+              ),
+              labelText: 'Thời gian đi',
+              prefixIcon: Icon(Icons.date_range_rounded, size: 18),
+            ),
+            items: datesOptions
+                .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                .toList(),
+            onChanged: (value) => setState(() => _travelDates = value!),
           ),
-          items: datesOptions
-              .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-              .toList(),
-          onChanged: (value) => setState(() => _travelDates = value!),
         ),
-      ),
-      const SizedBox(width: 16),
-      Expanded(
-        child: DropdownButtonFormField<String>(
-          isExpanded: true,
-          value: _travelers,
-          decoration: const InputDecoration(
-            isDense: true,
-            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            labelText: 'Số người',
-            prefixIcon: Icon(Icons.group_rounded, size: 18),
+        const SizedBox(width: 16),
+        Expanded(
+          child: DropdownButtonFormField<String>(
+            isExpanded: true,
+            value: _travelers,
+            decoration: const InputDecoration(
+              isDense: true,
+              contentPadding: EdgeInsets.symmetric(
+                vertical: 10,
+                horizontal: 10,
+              ),
+              labelText: 'Số người',
+              prefixIcon: Icon(Icons.group_rounded, size: 18),
+            ),
+            items: travelersOptions
+                .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                .toList(),
+            onChanged: (value) => setState(() => _travelers = value!),
           ),
-          items: travelersOptions
-              .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-              .toList(),
-          onChanged: (value) => setState(() => _travelers = value!),
         ),
-      ),
-    ],
-  );
-}
-
+      ],
+    );
+  }
 
   Widget _buildNotesInput() {
     return Column(
@@ -202,11 +269,13 @@ class _AIRequestScreenState extends State<AIRequestScreen> {
         TextFormField(
           maxLines: 4,
           decoration: const InputDecoration(
-            labelText: 'Ghi chú/Sở thích đặc biệt (VD: Thích cắm trại, Không thích hải sản)',
+            labelText:
+                'Sở thích (ngăn cách bằng dấu phẩy, VD: beach, food, relaxation)',
             alignLabelWithHint: true,
-            prefixIcon: Icon(Icons.description_rounded),
+            prefixIcon: Icon(Icons.favorite_rounded),
           ),
-          onSaved: (value) => _notes = value!,
+          onSaved: (value) => _notes = value ?? '',
+          initialValue: 'beach, food, relaxation',
         ),
       ],
     );

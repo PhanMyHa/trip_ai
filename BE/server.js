@@ -31,12 +31,20 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/services', require('./routes/serviceRoutes'));
+app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/vouchers', require('./routes/voucherRoutes'));
+app.use('/api/itineraries', require('./routes/itineraryRoutes'));
+app.use('/api/bookings', require('./routes/bookingRoutes'));
+app.use('/api/reels', require('./routes/reelRoutes'));
+app.use('/api/ai', require('./routes/aiRoutes'));
 
 app.get('/', (req, res) => {
   res.send('Travel AI Backend đang chạy...');
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server đang chạy tại http://192.168.1.19:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server đang chạy tại http://192.168.1.18:${PORT}`);
+  console.log(`Server cũng lắng nghe trên http://localhost:${PORT}`);
 });

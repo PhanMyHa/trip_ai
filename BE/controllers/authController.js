@@ -53,13 +53,13 @@ exports.login = async (req, res) => {
     // Tìm user
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ success: false, message: 'Email hoặc mật khẩu không đúng' });
+      return res.status(400).json({ success: false, message: 'Email  không đúng' });
     }
 
     // Kiểm tra password
     const isMatch = await user.matchPassword(password);
     if (!isMatch) {
-      return res.status(400).json({ success: false, message: 'Email hoặc mật khẩu không đúng' });
+      return res.status(400).json({ success: false, message: ' Mật khẩu không đúng' });
     }
 
     // Tạo token

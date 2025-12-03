@@ -41,31 +41,32 @@ class Reel {
     this.serviceLocation,
   });
 
-  factory Reel.fromJson(Map<String, dynamic> json) {
-    return Reel(
-      id: json['_id'] ?? '',
-      reelId: json['reelId'] ?? '',
-      userId: json['userId'] ?? '',
-      serviceId: json['serviceId'] ?? '',
-      videoUrl: json['videoUrl'] ?? '',
-      caption: json['caption'] ?? '',
-      hashtags: List<String>.from(json['hashtags'] ?? []),
-      views: json['views'] ?? 0,
-      likes: json['likes'] ?? 0,
-      comments: json['comments'] ?? 0,
-      shares: json['shares'] ?? 0,
-      createdAt: DateTime.parse(
-        json['createdAt'] ?? DateTime.now().toIso8601String(),
-      ),
-      updatedAt: DateTime.parse(
-        json['updatedAt'] ?? DateTime.now().toIso8601String(),
-      ),
-      userName: json['user']?['name'],
-      userAvatar: json['user']?['avatarUrl'],
-      serviceTitle: json['service']?['title'],
-      serviceLocation: json['service']?['location']?['city'],
-    );
-  }
+  // lib/models/reel.dart – SỬA NHỎ ĐỂ AN TOÀN 100%
+factory Reel.fromJson(Map<String, dynamic> json) {
+  final userObj = json['userId'] is Map ? json['userId'] : {};
+  final serviceObj = json['serviceId'] is Map ? json['serviceId'] : {};
+
+  return Reel(
+    id: json['_id']?.toString() ?? '',
+    reelId: json['reelId'] ?? '',
+    userId: userObj['_id']?.toString() ?? json['userId']?.toString() ?? '',
+    serviceId: serviceObj['_id']?.toString() ?? json['serviceId']?.toString() ?? '',
+    videoUrl: json['videoUrl'] ?? '',
+    caption: json['caption'] ?? 'Đang khám phá...',
+    hashtags: List<String>.from(json['hashtags'] ?? []),
+    views: json['views'] ?? 0,
+    likes: json['likes'] ?? 0,
+    comments: json['comments'] ?? 0,
+    shares: json['shares'] ?? 0,
+    createdAt: DateTime.tryParse(json['createdAt'] ?? '') ?? DateTime.now(),
+    updatedAt: DateTime.tryParse(json['updatedAt'] ?? '') ?? DateTime.now(),
+
+    userName: userObj['name'] ?? 'Người dùng',
+    userAvatar: userObj['avatarUrl'],
+    serviceTitle: serviceObj['title'],
+    serviceLocation: serviceObj['location']?['city'],
+  );
+}
 
   Map<String, dynamic> toJson() {
     return {
@@ -83,5 +84,45 @@ class Reel {
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
     };
+  }
+
+  Reel copyWith({
+    String? id,
+    String? reelId,
+    String? userId,
+    String? serviceId,
+    String? videoUrl,
+    String? caption,
+    List<String>? hashtags,
+    int? views,
+    int? likes,
+    int? comments,
+    int? shares,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    String? userName,
+    String? userAvatar,
+    String? serviceTitle,
+    String? serviceLocation,
+  }) {
+    return Reel(
+      id: id ?? this.id,
+      reelId: reelId ?? this.reelId,
+      userId: userId ?? this.userId,
+      serviceId: serviceId ?? this.serviceId,
+      videoUrl: videoUrl ?? this.videoUrl,
+      caption: caption ?? this.caption,
+      hashtags: hashtags ?? this.hashtags,
+      views: views ?? this.views,
+      likes: likes ?? this.likes,
+      comments: comments ?? this.comments,
+      shares: shares ?? this.shares,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      userName: userName ?? this.userName,
+      userAvatar: userAvatar ?? this.userAvatar,
+      serviceTitle: serviceTitle ?? this.serviceTitle,
+      serviceLocation: serviceLocation ?? this.serviceLocation,
+    );
   }
 }

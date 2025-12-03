@@ -1,0 +1,4 @@
+bookingId;userId;serviceId;startDate;endDate;totalPrice;status;createdAt
+BK001;692e880ac8f7687fe92b282f;692e880ac8f7687fe92b2836;undefined;undefined;2400000;confirmed;Tue Dec 02 2025 13:32:42 GMT+0700 (Giờ Đông Dương)
+BK002;692e880ac8f7687fe92b2833;692e880ac8f7687fe92b2837;undefined;undefined;14000000;pending;Tue Dec 02 2025 13:32:42 GMT+0700 (Giờ Đông Dương)
+BK003;692e880ac8f7687fe92b282f;692e880ac8f7687fe92b2838;undefined;undefined;3000000;confirmed;Tue Dec 02 2025 13:32:42 GMT+0700 (Giờ Đông Dương)

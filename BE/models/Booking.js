@@ -7,25 +7,29 @@ const bookingSchema = new mongoose.Schema({
     required: true
   },
   userId: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },
   serviceId: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Service',
     required: true
   },
-  startDate: {
+  checkInDate: {
     type: Date,
     required: true
   },
-  endDate: Date,
-  guests: {
-    type: Number,
-    default: 1
+  checkOutDate: {
+    type: Date,
+    required: true
   },
-  totalAmount: {
+  numberOfGuests: {
+    type: Number,
+    required: true,
+    min: 1
+  },
+  totalPrice: {
     type: Number,
     required: true
   },
@@ -43,5 +47,9 @@ const bookingSchema = new mongoose.Schema({
 }, {
   timestamps: true
 });
+
+// Index
+bookingSchema.index({ userId: 1, createdAt: -1 });
+bookingSchema.index({ serviceId: 1 });
 
 module.exports = mongoose.model('Booking', bookingSchema);

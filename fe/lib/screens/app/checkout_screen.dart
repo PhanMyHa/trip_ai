@@ -1,48 +1,136 @@
+import 'package:fe/models/booking.dart';
+import 'package:fe/models/service.dart';
+import 'package:fe/screens/app/booking_confirm_screen.dart';
+import 'package:fe/services/api_service.dart';
 import 'package:fe/theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
+class CheckoutScreen extends StatefulWidget {
+  final Service service;
+  final DateTime checkInDate;
+  final DateTime checkOutDate;
+  final int numberOfGuests;
+  final String? specialRequests;
 
-// Mock thông tin đặt chỗ
-class BookingSummary {
-  final String serviceType;
-  final String title;
-  final String date;
-  final int totalAmount;
-  final int discount;
-
-  BookingSummary({
-    required this.serviceType,
-    required this.title,
-    required this.date,
-    required this.totalAmount,
-    this.discount = 150000,
+  const CheckoutScreen({
+    super.key,
+    required this.service,
+    required this.checkInDate,
+    required this.checkOutDate,
+    required this.numberOfGuests,
+    this.specialRequests,
   });
+
+  @override
+  State<CheckoutScreen> createState() => _CheckoutScreenState();
 }
 
-final mockSummary = BookingSummary(
-  serviceType: 'Khách sạn',
-  title: 'Khách sạn Đồi Thông - Phòng Deluxe',
-  date: '20/12/2024 - 22/12/2024',
-  totalAmount: 3600000,
-);
+class _CheckoutScreenState extends State<CheckoutScreen> {
+  final _voucherController = TextEditingController();
+  bool _isProcessing = false;
+  String? _appliedVoucherCode;
+  double _discountAmount = 0;
 
-class CheckoutScreen extends StatelessWidget {
-  final BookingSummary summary;
+  @override
+  void dispose() {
+    _voucherController.dispose();
+    super.dispose();
+  }
 
-  const CheckoutScreen({super.key, required this.summary});
+  int get _numberOfDays {
+    return widget.checkOutDate.difference(widget.checkInDate).inDays;
+  }
+
+  double get _subtotal {
+    if (widget.service.category.contains('Tour')) {
+      return widget.service.price * widget.numberOfGuests;
+    }
+    return widget.service.price * widget.numberOfGuests * _numberOfDays;
+  }
+
+  double get _tax {
+    return _subtotal * 0.1;
+  }
+
+  double get _finalTotal {
+    return _subtotal - _discountAmount + _tax;
+  }
+
+  Future<void> _applyVoucher() async {
+    if (_voucherController.text.trim().isEmpty) return;
+
+    try {
+      final result = await ApiService.applyVoucher(
+        _voucherController.text.trim(),
+        _subtotal,
+      );
+      if (result != null && mounted) {
+        setState(() {
+          _appliedVoucherCode = _voucherController.text.trim();
+          _discountAmount = result['discount']?.toDouble() ?? 0;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Áp dụng voucher thành công!')),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Lỗi: ${e.toString()}')));
+      }
+    }
+  }
+
+  Future<void> _processPayment() async {
+    if (_isProcessing) return;
+
+    setState(() => _isProcessing = true);
+
+    try {
+      final bookingData = await ApiService.createBooking(
+        serviceId: widget.service.id,
+        checkInDate: widget.checkInDate,
+        checkOutDate: widget.checkOutDate,
+        numberOfGuests: widget.numberOfGuests,
+        specialRequests: widget.specialRequests,
+        voucherCode: _appliedVoucherCode,
+      );
+
+      if (bookingData != null && mounted) {
+        final booking = Booking.fromJson(bookingData);
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => BookingConfirmationScreen(booking: booking),
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Lỗi đặt chỗ: ${e.toString()}')));
+      }
+    } finally {
+      if (mounted) setState(() => _isProcessing = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final dateFormat = DateFormat('dd/MM/yyyy');
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Thanh Toán Đặt Chỗ'),
-      ),
+      appBar: AppBar(title: const Text('Thanh Toán Đặt Chỗ')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildBookingSummaryCard(),
+            _buildBookingSummaryCard(dateFormat),
             const SizedBox(height: 30),
             _buildPaymentMethodSection(),
             const SizedBox(height: 30),
@@ -58,7 +146,7 @@ class CheckoutScreen extends StatelessWidget {
   }
 
   // --- Tóm tắt Đặt chỗ ---
-  Widget _buildBookingSummaryCard() {
+  Widget _buildBookingSummaryCard(DateFormat dateFormat) {
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -67,18 +155,29 @@ class CheckoutScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(summary.serviceType,
-                style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.primaryBlue)),
+            Text(
+              widget.service.category,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: AppColors.primaryBlue,
+              ),
+            ),
             const Divider(height: 15),
             ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.hotel_rounded, color: AppColors.secondaryOrange),
-              title: Text(summary.title,
-                  style: const TextStyle(fontWeight: FontWeight.w600)),
-              subtitle: Text('Ngày: ${summary.date}'),
+              leading: const Icon(
+                Icons.hotel_rounded,
+                color: AppColors.secondaryOrange,
+              ),
+              title: Text(
+                widget.service.title,
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+              subtitle: Text(
+                'Ngày: ${dateFormat.format(widget.checkInDate)} - ${dateFormat.format(widget.checkOutDate)}\n'
+                'Số khách: ${widget.numberOfGuests}',
+              ),
             ),
           ],
         ),
@@ -91,13 +190,26 @@ class CheckoutScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Phương thức Thanh toán',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        const Text(
+          'Phương thức Thanh toán',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
         const SizedBox(height: 15),
         _buildPaymentOption(
-            'Ví điện tử (Momo/ZaloPay)', Icons.qr_code_rounded, true),
-        _buildPaymentOption('Thẻ Tín dụng/Ghi nợ', Icons.credit_card_rounded, false),
-        _buildPaymentOption('Chuyển khoản Ngân hàng', Icons.account_balance_rounded, false),
+          'Ví điện tử (Momo/ZaloPay)',
+          Icons.qr_code_rounded,
+          true,
+        ),
+        _buildPaymentOption(
+          'Thẻ Tín dụng/Ghi nợ',
+          Icons.credit_card_rounded,
+          false,
+        ),
+        _buildPaymentOption(
+          'Chuyển khoản Ngân hàng',
+          Icons.account_balance_rounded,
+          false,
+        ),
       ],
     );
   }
@@ -110,7 +222,10 @@ class CheckoutScreen extends StatelessWidget {
         // Xử lý chọn phương thức thanh toán
       },
       title: Text(label),
-      secondary: Icon(icon, color: isSelected ? AppColors.primaryBlue : Colors.grey),
+      secondary: Icon(
+        icon,
+        color: isSelected ? AppColors.primaryBlue : Colors.grey,
+      ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       controlAffinity: ListTileControlAffinity.trailing,
       activeColor: AppColors.secondaryOrange,
@@ -122,20 +237,51 @@ class CheckoutScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Mã Giảm Giá & Ưu Đãi',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        const Text(
+          'Mã Giảm Giá & Ưu Đãi',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
         const SizedBox(height: 15),
-        TextFormField(
-          initialValue: 'TRAVELAI20',
-          readOnly: true,
-          decoration: InputDecoration(
-            labelText: 'Voucher đã áp dụng',
-            prefixIcon: const Icon(Icons.local_offer_rounded, color: AppColors.secondaryOrange),
-            suffixIcon: TextButton(
-              onPressed: () {},
-              child: const Text('Thay đổi'),
+        Row(
+          children: [
+            Expanded(
+              child: TextFormField(
+                controller: _voucherController,
+                decoration: InputDecoration(
+                  labelText: _appliedVoucherCode == null
+                      ? 'Nhập mã voucher'
+                      : 'Voucher đã áp dụng',
+                  prefixIcon: const Icon(
+                    Icons.local_offer_rounded,
+                    color: AppColors.secondaryOrange,
+                  ),
+                ),
+                enabled: _appliedVoucherCode == null,
+              ),
             ),
-          ),
+            const SizedBox(width: 8),
+            ElevatedButton(
+              onPressed: _appliedVoucherCode == null
+                  ? _applyVoucher
+                  : () {
+                      setState(() {
+                        _appliedVoucherCode = null;
+                        _discountAmount = 0;
+                        _voucherController.clear();
+                      });
+                    },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: _appliedVoucherCode == null
+                    ? AppColors.primaryBlue
+                    : Colors.grey,
+                padding: const EdgeInsets.symmetric(
+                  vertical: 16,
+                  horizontal: 20,
+                ),
+              ),
+              child: Text(_appliedVoucherCode == null ? 'Áp dụng' : 'Hủy'),
+            ),
+          ],
         ),
       ],
     );
@@ -143,11 +289,6 @@ class CheckoutScreen extends StatelessWidget {
 
   // --- Chi tiết Giá ---
   Widget _buildPriceDetails() {
-    final subtotal = summary.totalAmount;
-    final discount = summary.discount;
-    final tax = 100000;
-    final finalTotal = subtotal - discount + tax;
-
     return Card(
       elevation: 1,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -156,35 +297,53 @@ class CheckoutScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildPriceRow('Tổng tiền dịch vụ', subtotal, false),
-            _buildPriceRow('Mã giảm giá (TRAVELAI20)', -discount, true),
-            _buildPriceRow('Phí dịch vụ & Thuế', tax, false),
+            _buildPriceRow('Tổng tiền dịch vụ', _subtotal, false),
+            if (_discountAmount > 0)
+              _buildPriceRow(
+                'Mã giảm giá ($_appliedVoucherCode)',
+                _discountAmount,
+                true,
+              ),
+            _buildPriceRow('Phí dịch vụ & Thuế (10%)', _tax, false),
             const Divider(height: 25),
-            _buildPriceRow('TỔNG THANH TOÁN', finalTotal, false, isTotal: true),
+            _buildPriceRow(
+              'TỔNG THANH TOÁN',
+              _finalTotal,
+              false,
+              isTotal: true,
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildPriceRow(String label, int amount, bool isDiscount,
-      {bool isTotal = false}) {
+  Widget _buildPriceRow(
+    String label,
+    double amount,
+    bool isDiscount, {
+    bool isTotal = false,
+  }) {
     final color = isTotal ? AppColors.errorRed : AppColors.textDark;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label,
-              style: TextStyle(
-                  fontWeight: isTotal ? FontWeight.bold : FontWeight.normal,
-                  color: isTotal ? color : Colors.grey.shade700)),
           Text(
-            '${isDiscount ? '-' : ''}${amount.abs().toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')} VNĐ',
+            label,
             style: TextStyle(
-                fontWeight: isTotal ? FontWeight.w900 : FontWeight.w600,
-                color: color,
-                fontSize: isTotal ? 18 : 16),
+              fontWeight: isTotal ? FontWeight.bold : FontWeight.normal,
+              color: isTotal ? color : Colors.grey.shade700,
+            ),
+          ),
+          Text(
+            '${isDiscount ? '-' : ''}${NumberFormat('#,###', 'vi_VN').format(amount.toInt())}đ',
+            style: TextStyle(
+              fontWeight: isTotal ? FontWeight.w900 : FontWeight.w600,
+              color: color,
+              fontSize: isTotal ? 18 : 16,
+            ),
           ),
         ],
       ),
@@ -193,7 +352,6 @@ class CheckoutScreen extends StatelessWidget {
 
   // --- Thanh Thanh toán cố định ---
   Widget _buildPaymentBar(BuildContext context) {
-    final finalTotal = mockSummary.totalAmount - mockSummary.discount + 100000;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       decoration: BoxDecoration(
@@ -209,10 +367,7 @@ class CheckoutScreen extends StatelessWidget {
       child: SizedBox(
         width: double.infinity,
         child: ElevatedButton(
-          onPressed: () {
-            // CẬP NHẬT: Chuyển sang màn hình xác nhận
-            Navigator.pushNamed(context, '/booking_confirmation', arguments: summary);
-          },
+          onPressed: _isProcessing ? null : _processPayment,
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.primaryBlue,
             padding: const EdgeInsets.symmetric(vertical: 18),
@@ -220,11 +375,16 @@ class CheckoutScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
             ),
           ),
-          child: Text(
-            'THANH TOÁN ${finalTotal.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')} VNĐ',
-            style: const TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textLight),
-          ),
+          child: _isProcessing
+              ? const CircularProgressIndicator(color: Colors.white)
+              : Text(
+                  'THANH TOÁN ${NumberFormat('#,###', 'vi_VN').format(_finalTotal.toInt())}đ',
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textLight,
+                  ),
+                ),
         ),
       ),
     );

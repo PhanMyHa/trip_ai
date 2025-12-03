@@ -1,3 +1,4 @@
+// lib/models/service.dart
 class Service {
   final String id;
   final String serviceId;
@@ -12,8 +13,6 @@ class Service {
   final double rating;
   final int reviewCount;
   final bool isAvailable;
-  final DateTime createdAt;
-  final DateTime updatedAt;
 
   Service({
     required this.id,
@@ -29,52 +28,90 @@ class Service {
     required this.rating,
     required this.reviewCount,
     required this.isAvailable,
-    required this.createdAt,
-    required this.updatedAt,
   });
 
   factory Service.fromJson(Map<String, dynamic> json) {
+    // Xử lý location (hỗ trợ cả kiểu cũ lat/lng + city và kiểu mới location object)
+    double lat = 0.0;
+    double lng = 0.0;
+    String city = "Không rõ";
+    String province = "";
+    String address = "";
+
+    if (json['location'] != null && json['location'] is Map) {
+      final loc = json['location'];
+      city = loc['city'] ?? json['city'] ?? city;
+      province = loc['province'] ?? province;
+      address = loc['address'] ?? json['address'] ?? address;
+      lat = (loc['latitude'] ?? loc['lat'] ?? 0).toDouble();
+      lng = (loc['longitude'] ?? loc['lng'] ?? 0).toDouble();
+    } else {
+      // Kiểu cũ: lat, lng, city riêng
+      lat = _parseDouble(json['lat'] ?? json['latitude'] ?? 0);
+      lng = _parseDouble(json['lng'] ?? json['longitude'] ?? 0);
+      city = json['city'] ?? city;
+      address = json['address'] ?? json['city'] ?? address;
+    }
+
+    // Xử lý images: hỗ trợ cả images[] và galleryUrls (string hoặc array)
+    List<String> imageList = [];
+    if (json['images'] != null && json['images'] is List) {
+      imageList = List<String>.from(json['images']);
+    } else if (json['galleryUrls'] != null) {
+      if (json['galleryUrls'] is List) {
+        imageList = List<String>.from(json['galleryUrls']);
+      } else {
+        imageList = [json['galleryUrls'] as String];
+      }
+    }
+    if (imageList.isEmpty) {
+      imageList = ["https://via.placeholder.com/400x300.png?text=No+Image"];
+    }
+
+    // Xử lý amenities: có thể là string phân cách ; hoặc ,
+    List<String> amenitiesList = [];
+    if (json['amenities'] != null) {
+      if (json['amenities'] is List) {
+        amenitiesList = List<String>.from(json['amenities']);
+      } else if (json['amenities'] is String) {
+        amenitiesList = (json['amenities'] as String)
+            .split(RegExp(r'[;,]'))
+            .map((e) => e.trim())
+            .where((e) => e.isNotEmpty)
+            .toList();
+      }
+    }
+
     return Service(
-      id: json['_id'] ?? '',
-      serviceId: json['serviceId'] ?? '',
-      providerId: json['providerId'] ?? '',
-      title: json['title'] ?? '',
-      category: json['category'] ?? '',
+      id: json['_id']?.toString() ?? DateTime.now().millisecondsSinceEpoch.toString(),
+      serviceId: json['serviceId']?.toString() ?? 'unknown',
+      providerId: json['providerId']?.toString() ?? 'unknown',
+      title: json['title'] ?? json['name'] ?? 'Chưa có tiêu đề',
+      category: json['category'] ?? 'Tour',
       description: json['description'] ?? '',
-      location: Location.fromJson(json['location'] ?? {}),
-      price: (json['price'] ?? 0).toDouble(),
-      images: List<String>.from(json['images'] ?? []),
-      amenities: List<String>.from(json['amenities'] ?? []),
-      rating: (json['rating'] ?? 0).toDouble(),
-      reviewCount: json['reviewCount'] ?? 0,
+      location: Location(
+        city: city,
+        province: province,
+        address: address,
+        latitude: lat,
+        longitude: lng,
+      ),
+      price: _parseDouble(json['price'] ?? json['priceFrom'] ?? 0),
+      images: imageList,
+      amenities: amenitiesList,
+      rating: _parseDouble(json['rating'] ?? json['ratingAverage'] ?? 4.5),
+      reviewCount: (json['reviewCount'] ?? 0).toInt(),
       isAvailable: json['isAvailable'] ?? true,
-      createdAt: DateTime.parse(
-        json['createdAt'] ?? DateTime.now().toIso8601String(),
-      ),
-      updatedAt: DateTime.parse(
-        json['updatedAt'] ?? DateTime.now().toIso8601String(),
-      ),
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      '_id': id,
-      'serviceId': serviceId,
-      'providerId': providerId,
-      'title': title,
-      'category': category,
-      'description': description,
-      'location': location.toJson(),
-      'price': price,
-      'images': images,
-      'amenities': amenities,
-      'rating': rating,
-      'reviewCount': reviewCount,
-      'isAvailable': isAvailable,
-      'createdAt': createdAt.toIso8601String(),
-      'updatedAt': updatedAt.toIso8601String(),
-    };
+  // Helper để parse số an toàn (vì dữ liệu cũ có thể là String)
+  static double _parseDouble(dynamic value) {
+    if (value is num) return value.toDouble();
+    if (value is String) {
+      return double.tryParse(value.replaceAll('.', '').replaceAll(',', '.')) ?? 0.0;
+    }
+    return 0.0;
   }
 }
 
@@ -93,23 +130,8 @@ class Location {
     required this.longitude,
   });
 
-  factory Location.fromJson(Map<String, dynamic> json) {
-    return Location(
-      city: json['city'] ?? '',
-      province: json['province'] ?? '',
-      address: json['address'] ?? '',
-      latitude: (json['latitude'] ?? 0).toDouble(),
-      longitude: (json['longitude'] ?? 0).toDouble(),
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'city': city,
-      'province': province,
-      'address': address,
-      'latitude': latitude,
-      'longitude': longitude,
-    };
+  @override
+  String toString() {
+    return '$city, $province';
   }
 }
