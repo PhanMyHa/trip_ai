@@ -16,12 +16,6 @@ Flutter 3.x
 
 Dart
 
-Provider / Riverpod (tùy cách triển khai)
-
-Google Maps API
-
-Firebase Messaging (nếu có push notification)
-
 Backend – NodeJS
 
 Express
@@ -30,9 +24,7 @@ MongoDB + Mongoose
 
 JWT Authentication
 
-Cloudinary (nếu upload ảnh/video)
-
-AI API (OpenAI/Gemini) để gợi ý lịch trình
+AI : gợi ý lịch trình
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 🚀 Cài đặt & Chạy dự án
 1️⃣ Backend – NodeJS
