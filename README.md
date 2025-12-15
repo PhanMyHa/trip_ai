@@ -1,6 +1,6 @@
 🌍 TravelAI – Ứng dụng Lên Kế Hoạch Du Lịch Thông Minh bằng AI
 
-Đồ án môn học – Ứng dụng di động / Hệ thống thông tin / Công nghệ phần mềm
+Ứng dụng di động / Hệ thống thông tin / Công nghệ phần mềm
 
 📌 Giới thiệu
 
